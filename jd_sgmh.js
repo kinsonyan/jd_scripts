@@ -29,10 +29,10 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let appId = '1EFRRxA' , homeDataFunPrefix = 'interact_template', collectScoreFunPrefix = 'harmony', message = ''
 let lotteryResultFunPrefix = homeDataFunPrefix, browseTime = 6
 const inviteCodes = [
-  '',
-  '',
-  '',
-  ''
+  'T0225KkcRx0c81zXc0-gxaYPIQCjVWmIaW5kRrbA@T0225KkcRx8epgDUJEzxlfUDcgCjVWmIaW5kRrbA@T0225KkcRU8Y9lbecUzykvEDdgCjVWmIaW5kRrbA',
+  'T012Z3_rmZ-VI8dsCjVWmIaW5kRrbA@T0225KkcRx8epgDUJEzxlfUDcgCjVWmIaW5kRrbA@T0225KkcRU8Y9lbecUzykvEDdgCjVWmIaW5kRrbA',
+  'T012Z3_rmZ-VI8dsCjVWmIaW5kRrbA@T0225KkcRx0c81zXc0-gxaYPIQCjVWmIaW5kRrbA@T0225KkcRU8Y9lbecUzykvEDdgCjVWmIaW5kRrbA',
+  'T012Z3_rmZ-VI8dsCjVWmIaW5kRrbA@T0225KkcRx0c81zXc0-gxaYPIQCjVWmIaW5kRrbA@T0225KkcRx8epgDUJEzxlfUDcgCjVWmIaW5kRrbA'
 ];
 const randomCount = $.isNode() ? 20 : 5;
 const notify = $.isNode() ? require('./sendNotify') : '';
