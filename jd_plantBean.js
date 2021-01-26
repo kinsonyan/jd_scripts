@@ -38,7 +38,7 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
   '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
   //账号三的好友shareCode,不同好友的shareCode中间用@符号隔开
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
+  'nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
   //账号四的好友shareCode,不同好友的shareCode中间用@符号隔开
   '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq',
 ]
