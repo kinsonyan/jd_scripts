@@ -13,7 +13,7 @@
         "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改。",
         "脚本地址【<a href=\"https://raw.githubusercontent.com/LXK9301/jd_scripts/master/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
         "使用方式【<a href=\"https://home.m.jd.com/myJd/newhome.action\">个人中心</a>】获取对应的数据Code",
-        "注：如与NobyDa的京东cookie出现重复，建议在此处删除重复的cookie"
+        "注：如与NobyDa的京东cookie重复，建议在此处删除重复的cookie"
       ],
       "settings": [
         {
@@ -518,6 +518,13 @@
           "desc": "参加多少人的赛跑比赛，其中2代表参加双人PK赛，10代表参加10人突围赛，50代表参加50人挑战赛，多账号参加不同级别的赛跑用&符号隔开,例如2&10&50"
         },
         {
+          "id": "joyRunNotify",
+          "name": "宠汪汪赛跑获胜是否通知",
+          "val": true,
+          "type": "boolean",
+          "desc": "宠汪汪赛跑获胜是否通知，默认通知"
+        },
+        {
           "id": "jd_joy_run_name",
           "name": "京东账号一昵称",
           "val": "",
@@ -709,7 +716,7 @@
     },
     {
       "id": "jd_SuperMarket",
-      "name": "京小超",
+      "name": "东东超市",
       "keys": [],
       "settings": [
         {
@@ -720,18 +727,11 @@
           "desc": "运行此脚本时不发出系统弹窗通知"
         },
         {
-          "id": "jdSuperMarketUpgrade",
-          "name": "自动升级(商品/货架)",
+          "id": "JOIN_PK_TEAM",
+          "name": "自动参加作者PK队伍",
           "val": true,
           "type": "boolean",
-          "desc": "自动升级,顺序:解锁升级商品、升级货架"
-        },
-        {
-          "id": "jdBusinessCircleJump",
-          "name": "自动更换商圈",
-          "val": true,
-          "type": "boolean",
-          "desc": "小于对方300热力值自动更换商圈队伍"
+          "desc": "每次pk活动自动参加作者PK队伍，默认参加"
         },
         {
           "id": "jdSuperMarketLottery",
@@ -745,7 +745,7 @@
       "repo": "https://github.com/LXK9301/jd_scripts",
       "scripts":[
         {
-          "name" : "京小超",
+          "name" : "东东超市",
           "script" : "https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js"
         }
       ],
@@ -756,11 +756,11 @@
     },
     {
       "id": "jd_SuperMarket_Reawrd",
-      "name": "京小超兑换奖品",
+      "name": "东东超市兑换奖品",
       "keys": [
         "coinToBeans"
       ],
-      "desc": "默认不兑换奖品,例如:兑换20京豆输入20,兑换1000京豆输入1000,兑换 柠檬果香洗手液， 输入 柠檬果香洗手液。其他详细的奖品名称去京小超活动页面查看",
+      "desc": "默认不兑换奖品,例如:兑换20京豆输入20,兑换1000京豆输入1000,兑换 柠檬果香洗手液， 输入 柠檬果香洗手液。其他详细的奖品名称去东东超市活动页面查看",
       "settings": [
         {
           "id": "jdSuperMarketRewardNotify",
@@ -781,7 +781,7 @@
       "repo": "https://github.com/LXK9301/jd_scripts",
       "scripts": [
         {
-          "name" : "京小超兑换奖品",
+          "name" : "东东超市兑换奖品",
           "script" : "https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_blueCoin.js"
         }
       ],

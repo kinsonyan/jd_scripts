@@ -8,6 +8,11 @@
 // github action用户的好友助力码填写到Action->Settings->Secrets->new Secret里面(Name填写 JxncShareCodes(此处的Name必须按此来写,不能随意更改),内容处填写助力码,填写规则如下)
 // 同一个京东账号的好友助力码用@符号隔开,不同京东账号之间用&符号或者换行隔开,下面给一个示例
 // 如: 京东账号1的shareCode1@京东账号1的shareCode2&京东账号2的shareCode1@京东账号2的shareCode2
+// 注意：京喜农场 种植种子发生变化的时候，互助码也会变！！
+// 注意：京喜农场 种植种子发生变化的时候，互助码也会变！！
+// 注意：京喜农场 种植种子发生变化的时候，互助码也会变！！
+// 每个账号 shareCdoe 是一个 json，示例如下
+// {"smp":"22bdadsfaadsfadse8a","active":"jdnc_1_btorange210113_2","joinnum":"1"}
 let JxncShareCodes = [
   '',//账号一的好友shareCode,不同好友中间用@符号隔开
   '',//账号二的好友shareCode，不同好友中间用@符号隔开

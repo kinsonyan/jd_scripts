@@ -6,6 +6,7 @@
  */
 /*
 京东年货节
+活动入口：https://lzdz-isv.isvjcloud.com/dingzhi/vm/template/activity/940531?activityId=dzvm210168869301
 用5000金币开盲盒必中200-300京豆，任务做完每天1000，5天换一次
 活动时间：2021年1月9日-2021年2月9日
 已支持IOS双京东账号,Node.js支持N个京东账号
@@ -13,17 +14,17 @@
 ============Quantumultx===============
 [task_local]
 #京东年货节
-1 7 * * * https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_nh.js, tag=京东年货节, enabled=true
+1 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js, tag=京东年货节, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "1 7 * * *" script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_nh.js,tag=京东年货节
+cron "1 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js,tag=京东年货节
 
 ===============Surge=================
-京东年货节 = type=cron,cronexp="1 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_nh.js
+京东年货节 = type=cron,cronexp="1 7 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js
 
 ============小火箭=========
-京东年货节 = type=cron,script-path=https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_nh.js, cronexpr="1 7 * * *", timeout=200, enable=true
+京东年货节 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js, cronexpr="1 7 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东年货节');
 
