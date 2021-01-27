@@ -30,8 +30,10 @@ let cookiesArr = [], cookie = '', message;
 const randomCount = 0; //const randomCount = $.isNode() ? 20 : 5;
 
 const inviteCodes = [
-'',
-'',
+'12766a89-d35e-42bc-864a-73642b97449a@85920cf3-af39-4037-bffe-63985183750c@c724a2b2-98ce-4695-bdf4-fd9e0b39ff29',
+'f25f4595-69e8-4064-a27d-bd6794e10c6d@85920cf3-af39-4037-bffe-63985183750c@c724a2b2-98ce-4695-bdf4-fd9e0b39ff29',
+'f25f4595-69e8-4064-a27d-bd6794e10c6d@12766a89-d35e-42bc-864a-73642b97449a@c724a2b2-98ce-4695-bdf4-fd9e0b39ff29',
+'f25f4595-69e8-4064-a27d-bd6794e10c6d@12766a89-d35e-42bc-864a-73642b97449a@85920cf3-af39-4037-bffe-63985183750c'
 ];
 
 if ($.isNode()) {
