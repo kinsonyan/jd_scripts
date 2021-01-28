@@ -89,7 +89,7 @@ async function jdCash() {
   await shareCodesFormat()
   await helpFriends()
   await index(true)
-  // await getReward()
+  await getReward()
   await showMsg()
 }
 function index(info=false) {
