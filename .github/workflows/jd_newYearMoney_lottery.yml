@@ -6,7 +6,7 @@ name: jd_newYearMoney_lottery
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 16 1,4,8,12 * * *' #此处为UTC-0时间
+    - cron: '0 1,4,8,12 * * *' #此处为UTC-0时间
   watch:
     types: started
   repository_dispatch:
