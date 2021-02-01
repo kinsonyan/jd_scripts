@@ -1,6 +1,7 @@
 /*
-京东天天加速链接：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js
+京东天天加速链接：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js
 更新时间：2020-12-25
+活动入口：京东APP我的-更多工具-天天加速
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 每天4京豆，再小的苍蝇也是肉
@@ -9,17 +10,17 @@
 =================QuantumultX==============
 [task_local]
 #天天加速
-8 0-23/3 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
+8 0-23/3 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
 
 ============Loon================
 [Script]
-cron "8 0-23/3 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js,tag=京东天天加速
+cron "8 0-23/3 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js,tag=京东天天加速
 
 ===========Surge============
-天天加速 = type=cron,cronexp="8 0-23/3 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js
+天天加速 = type=cron,cronexp="8 0-23/3 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js
 
 ==============小火箭=============
-天天加速 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js, cronexpr="11 0-23/3 * * *", timeout=3600, enable=true
+天天加速 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js, cronexpr="11 0-23/3 * * *", timeout=3600, enable=true
 */
 
 const $ = new Env('✈️天天加速');
@@ -496,6 +497,7 @@ function useEnergy(PropID) {
     }
   })
 }
+//虫洞
 function getMemBerList() {
   return new Promise((resolve) => {
     const body = { "source": "game", "status": 0};
@@ -516,6 +518,12 @@ function getMemBerList() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data && data.success) {
+              for (let item of data.data) {
+                if (item['taskStatus'] === 0) {
+                  $.log(`去领取【${item['title']}】任务\n`)
+                  await getMemBerGetTask(item['sourceId']);
+                }
+              }
               $.getRewardBeans = 0;
               console.log(`\n检查是否可领虫洞京豆奖励`)
               $.memBerList = data.data.filter(item => item['taskStatus'] === 2);
@@ -535,6 +543,39 @@ function getMemBerList() {
         }
       } catch (e) {
         // $.msg("天天加速-查询太空特殊事件" + e.name + "‼️", JSON.stringify(e), e.message)
+        $.logErr(e, resp)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+//领取虫洞任务API
+function getMemBerGetTask(sourceId) {
+  return new Promise((resolve) => {
+    const body = { "source": "game", sourceId};
+    const options = {
+      url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=member_getTask&body=${escape(JSON.stringify(body))}&_t=${Date.now()}`,
+      headers: {
+        Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
+        Cookie: cookie,
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+      }
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data && data.success) {
+              // $.getRewardBeans += data.data.beans;
+            }
+          }
+        }
+      } catch (e) {
         $.logErr(e, resp)
       } finally {
         resolve()
