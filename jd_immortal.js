@@ -31,7 +31,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const randomCount = $.isNode() ? 20 : 5;
+const randomCount = 0;//const randomCount = $.isNode() ? 20 : 5;
 let scoreToBeans = $.isNode()?(process.env.JD_IMMORTAL_SCORE || 700):$.getdata('scoreToBeans') || 700; //兑换多少数量的京豆（20或者1000），0表示不兑换，默认兑换20京豆，如需兑换把0改成20或者1000，或者'商品名称'(商品名称放到单引号内)即可
 
 //IOS等用户直接用NobyDa的jd cookie
@@ -52,10 +52,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
-  '43xIs4YwE5Z7DsWOzDSL6B7EU26GlcvT-X9cmLj95V2EuccZB9wUdWiTZttZ3gdZebTw@43xIs4YwE5Z7DsWOzDSL6h9WTluNk69Q6EKuC6GoxVINmEcZB9wUVU3GrpakLts0IcJQ@43xIs4YwE5Z7DsWOzDSAqhBEPIGM-0KMecJhDb7fYFNuUYcZB9wxVSjDxw5qFhw6k-Aw',
-  '30xIs4YwE5Z7FSWd8i_AVjtgxgHwSdDhA8kaKH8XfWa0f@43xIs4YwE5Z7DsWOzDSL6h9WTluNk69Q6EKuC6GoxVINmEcZB9wUVU3GrpakLts0IcJQ@43xIs4YwE5Z7DsWOzDSAqhBEPIGM-0KMecJhDb7fYFNuUYcZB9wxVSjDxw5qFhw6k-Aw',
-  '30xIs4YwE5Z7FSWd8i_AVjtgxgHwSdDhA8kaKH8XfWa0f@43xIs4YwE5Z7DsWOzDSL6B7EU26GlcvT-X9cmLj95V2EuccZB9wUdWiTZttZ3gdZebTw@43xIs4YwE5Z7DsWOzDSAqhBEPIGM-0KMecJhDb7fYFNuUYcZB9wxVSjDxw5qFhw6k-Aw',
-  '30xIs4YwE5Z7FSWd8i_AVjtgxgHwSdDhA8kaKH8XfWa0f@43xIs4YwE5Z7DsWOzDSL6B7EU26GlcvT-X9cmLj95V2EuccZB9wUdWiTZttZ3gdZebTw@43xIs4YwE5Z7DsWOzDSL6h9WTluNk69Q6EKuC6GoxVINmEcZB9wUVU3GrpakLts0IcJQ'
+  `39xIs4YwE5Z7CPQQ0baz9jNWO6PSZHsNWqfOwWyqScbJBGhg4v7HbuBg63TJ4@27xIs4YwE5Z7FGzJqrMmavC_vWKtbEaJxbz0Vahw@43xIs4YwE5Z7DsWOzDSP_N6WTDnbA0wBjjof6cA9FzcbHMcZB9wE1R3ToSluCgxAzEXQ@43xIs4YwE5Z7DsWOzDSEuRWEOROpnDjMx_VvSs5ikYQ8XgcZB9whEHjDmPKQoL16TZ8w@50xIs4YwE5Z7FTId9W-KibDgxxx6AEa7189V1zSxSf2HP6681IXPQ81aJEP77WoHXLcK7QzlxGqsGqfU@43xIs4YwE5Z7DsWOzDSPKFWdkRe2Ae6h0jAdlhuSmuwcfUcZB9wBcHhj0_zyZDNK4Rhg`,
+  `39xIs4YwE5Z7CPQQ0baz9jNWO6PSZHsNWqfOwWyqScbJBGhg4v7HbuBg63TJ4@27xIs4YwE5Z7FGzJqrMmavC_vWKtbEaJxbz0Vahw@43xIs4YwE5Z7DsWOzDSP_N6WTDnbA0wBjjof6cA9FzcbHMcZB9wE1R3ToSluCgxAzEXQ@43xIs4YwE5Z7DsWOzDSEuRWEOROpnDjMx_VvSs5ikYQ8XgcZB9whEHjDmPKQoL16TZ8w@43xIs4YwE5Z7DsWOzDSFehRRs_UaNcqkiU7BrrzDTKHScMcZB9wkYC2z6K-QOsQy1S3A@43xIs4YwE5Z7DsWOzDSFcl8RjNxfrQquzeGQQtkQOUbyqscZB9wkxX2jw2HhM7TczeqA`
 ];
 !(async () => {
   await requireConfig();
