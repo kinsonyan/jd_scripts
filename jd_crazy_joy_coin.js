@@ -260,8 +260,8 @@ async function jdCrazyJoy() {
         $.log(`\n${$.joyIds[0]} ${$.joyIds[1]} ${$.joyIds[2]} ${$.joyIds[3]}`)
         $.log(`${$.joyIds[4]} ${$.joyIds[5]} ${$.joyIds[6]} ${$.joyIds[7]}`)
         $.log(`${$.joyIds[8]} ${$.joyIds[9]} ${$.joyIds[10]} ${$.joyIds[11]}\n`)
+      }
     }
-  }
     if (idx === '34' && vo.length >= 8) {
       if ($.coin >= 6000000000000000) {
         //当存在8个34级JOY，并且剩余金币可为后面继续合成两只新的34级JOY(按全部用30级JOY合成一只34级JOY计算需:1.66T * 2 * 2 * 2 * 2 = 26.56T = 2.6Q)时,则此条件下合并两个34级JOY
@@ -269,7 +269,7 @@ async function jdCrazyJoy() {
         await mergeJoy(vo[0], vo[1])
         await $.wait(3000)
         await getJoyList()
-  await $.wait(1000)
+        await $.wait(1000)
         if ($.joyIds && $.joyIds.length > 0) {
           $.log('合并后的JOY分布情况')
           $.log(`\n${$.joyIds[0]} ${$.joyIds[1]} ${$.joyIds[2]} ${$.joyIds[3]}`)
@@ -464,7 +464,7 @@ function mergeJoy(x, y) {
                 console.log(`合并成功，获得${level(data.data.newJoyId)}级Joy`)
                 if (data.data.newJoyId === 1007 && $.isNode()) await notify.sendNotify($.name, `京东账号${$.index} ${$.nickName}\n合并成功，获得${level(data.data.newJoyId)}级Joy`)
               } else {
-              console.log(`合并成功，获得${data.data.newJoyId}级Joy`)
+                console.log(`合并成功，获得${data.data.newJoyId}级Joy`)
               }
             } else
               console.log(`合并失败，错误`)
