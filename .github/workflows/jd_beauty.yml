@@ -35,6 +35,9 @@ jobs:
       - name: npm install
         run: |
           npm install
+      - name: npm install
+        run: |
+          npm install ws
       - name: '运行 【美丽研究院】'
         run: |
           node jd_beauty.js
