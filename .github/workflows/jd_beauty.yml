@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: npm install
+      - name: npm install ws
         run: |
           npm install ws
       - name: '运行 【美丽研究院】'
