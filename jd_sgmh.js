@@ -34,7 +34,7 @@ const inviteCodes = [
   'T012Z3_rmZ-VI8dsCjVWmIaW5kRrbA@T0225KkcRx0c81zXc0-gxaYPIQCjVWmIaW5kRrbA@T0225KkcRU8Y9lbecUzykvEDdgCjVWmIaW5kRrbA',
   'T012Z3_rmZ-VI8dsCjVWmIaW5kRrbA@T0225KkcRx0c81zXc0-gxaYPIQCjVWmIaW5kRrbA@T0225KkcRx8epgDUJEzxlfUDcgCjVWmIaW5kRrbA'
 ];
-const randomCount = $.isNode() ? 20 : 5;
+const randomCount = 0;//const randomCount = $.isNode() ? 20 : 5;
 const notify = $.isNode() ? require('./sendNotify') : '';
 let merge = {}
 //IOS等用户直接用NobyDa的jd cookie
