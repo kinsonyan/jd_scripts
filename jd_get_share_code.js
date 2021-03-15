@@ -2,157 +2,36 @@
 一键获取我仓库所有需要互助类脚本的互助码(邀请码)(其中京东赚赚jd_jdzz.js如果今天达到5人助力则不能提取互助码)
 没必要设置(cron)定时执行，需要的时候，自己手动执行一次即可
 注：临时活动的互助码不添加到此处，如有需要请手动运行对应临时活动脚本
-更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_get_share_code.js
+更新地址：https://jdsharedresourcescdn.azureedge.net/jdresource/jd_get_share_code.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #获取互助码
-20 13 * * 6 https://gitee.com/lxk0301/jd_scripts/raw/master/jd_get_share_code.js, tag=获取互助码, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+20 13 * * 6 https://jdsharedresourcescdn.azureedge.net/jdresource/jd_get_share_code.js, tag=获取互助码, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "20 13 * * 6" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_get_share_code.js, tag=获取互助码
+cron "20 13 * * 6" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_get_share_code.js, tag=获取互助码
 
 ===============Surge=================
-获取互助码 = type=cron,cronexp="20 13 * * 6",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_get_share_code.js
+获取互助码 = type=cron,cronexp="20 13 * * 6",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_get_share_code.js
 
 ============小火箭=========
-获取互助码 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_get_share_code.js, cronexpr="20 13 * * 6", timeout=3600, enable=true
+获取互助码 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_get_share_code.js, cronexpr="20 13 * * 6", timeout=3600, enable=true
  */
 const $ = new Env("获取互助码");
 const JD_API_HOST = "https://api.m.jd.com/client.action";
 let cookiesArr = [], cookie = '', message;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-!function (n) {
-  "use strict";
-
-  function t(n, t) {
-    var r = (65535 & n) + (65535 & t);
-    return (n >> 16) + (t >> 16) + (r >> 16) << 16 | 65535 & r
-  }
-
-  function r(n, t) {
-    return n << t | n >>> 32 - t
-  }
-
-  function e(n, e, o, u, c, f) {
-    return t(r(t(t(e, n), t(u, f)), c), o)
-  }
-
-  function o(n, t, r, o, u, c, f) {
-    return e(t & r | ~t & o, n, t, u, c, f)
-  }
-
-  function u(n, t, r, o, u, c, f) {
-    return e(t & o | r & ~o, n, t, u, c, f)
-  }
-
-  function c(n, t, r, o, u, c, f) {
-    return e(t ^ r ^ o, n, t, u, c, f)
-  }
-
-  function f(n, t, r, o, u, c, f) {
-    return e(r ^ (t | ~o), n, t, u, c, f)
-  }
-
-  function i(n, r) {
-    n[r >> 5] |= 128 << r % 32,
-      n[14 + (r + 64 >>> 9 << 4)] = r;
-    var e, i, a, d, h, l = 1732584193, g = -271733879, v = -1732584194, m = 271733878;
-    for (e = 0; e < n.length; e += 16)
-      i = l,
-        a = g,
-        d = v,
-        h = m,
-        g = f(g = f(g = f(g = f(g = c(g = c(g = c(g = c(g = u(g = u(g = u(g = u(g = o(g = o(g = o(g = o(g, v = o(v, m = o(m, l = o(l, g, v, m, n[e], 7, -680876936), g, v, n[e + 1], 12, -389564586), l, g, n[e + 2], 17, 606105819), m, l, n[e + 3], 22, -1044525330), v = o(v, m = o(m, l = o(l, g, v, m, n[e + 4], 7, -176418897), g, v, n[e + 5], 12, 1200080426), l, g, n[e + 6], 17, -1473231341), m, l, n[e + 7], 22, -45705983), v = o(v, m = o(m, l = o(l, g, v, m, n[e + 8], 7, 1770035416), g, v, n[e + 9], 12, -1958414417), l, g, n[e + 10], 17, -42063), m, l, n[e + 11], 22, -1990404162), v = o(v, m = o(m, l = o(l, g, v, m, n[e + 12], 7, 1804603682), g, v, n[e + 13], 12, -40341101), l, g, n[e + 14], 17, -1502002290), m, l, n[e + 15], 22, 1236535329), v = u(v, m = u(m, l = u(l, g, v, m, n[e + 1], 5, -165796510), g, v, n[e + 6], 9, -1069501632), l, g, n[e + 11], 14, 643717713), m, l, n[e], 20, -373897302), v = u(v, m = u(m, l = u(l, g, v, m, n[e + 5], 5, -701558691), g, v, n[e + 10], 9, 38016083), l, g, n[e + 15], 14, -660478335), m, l, n[e + 4], 20, -405537848), v = u(v, m = u(m, l = u(l, g, v, m, n[e + 9], 5, 568446438), g, v, n[e + 14], 9, -1019803690), l, g, n[e + 3], 14, -187363961), m, l, n[e + 8], 20, 1163531501), v = u(v, m = u(m, l = u(l, g, v, m, n[e + 13], 5, -1444681467), g, v, n[e + 2], 9, -51403784), l, g, n[e + 7], 14, 1735328473), m, l, n[e + 12], 20, -1926607734), v = c(v, m = c(m, l = c(l, g, v, m, n[e + 5], 4, -378558), g, v, n[e + 8], 11, -2022574463), l, g, n[e + 11], 16, 1839030562), m, l, n[e + 14], 23, -35309556), v = c(v, m = c(m, l = c(l, g, v, m, n[e + 1], 4, -1530992060), g, v, n[e + 4], 11, 1272893353), l, g, n[e + 7], 16, -155497632), m, l, n[e + 10], 23, -1094730640), v = c(v, m = c(m, l = c(l, g, v, m, n[e + 13], 4, 681279174), g, v, n[e], 11, -358537222), l, g, n[e + 3], 16, -722521979), m, l, n[e + 6], 23, 76029189), v = c(v, m = c(m, l = c(l, g, v, m, n[e + 9], 4, -640364487), g, v, n[e + 12], 11, -421815835), l, g, n[e + 15], 16, 530742520), m, l, n[e + 2], 23, -995338651), v = f(v, m = f(m, l = f(l, g, v, m, n[e], 6, -198630844), g, v, n[e + 7], 10, 1126891415), l, g, n[e + 14], 15, -1416354905), m, l, n[e + 5], 21, -57434055), v = f(v, m = f(m, l = f(l, g, v, m, n[e + 12], 6, 1700485571), g, v, n[e + 3], 10, -1894986606), l, g, n[e + 10], 15, -1051523), m, l, n[e + 1], 21, -2054922799), v = f(v, m = f(m, l = f(l, g, v, m, n[e + 8], 6, 1873313359), g, v, n[e + 15], 10, -30611744), l, g, n[e + 6], 15, -1560198380), m, l, n[e + 13], 21, 1309151649), v = f(v, m = f(m, l = f(l, g, v, m, n[e + 4], 6, -145523070), g, v, n[e + 11], 10, -1120210379), l, g, n[e + 2], 15, 718787259), m, l, n[e + 9], 21, -343485551),
-        l = t(l, i),
-        g = t(g, a),
-        v = t(v, d),
-        m = t(m, h);
-    return [l, g, v, m]
-  }
-
-  function a(n) {
-    var t, r = "", e = 32 * n.length;
-    for (t = 0; t < e; t += 8)
-      r += String.fromCharCode(n[t >> 5] >>> t % 32 & 255);
-    return r
-  }
-
-  function d(n) {
-    var t, r = [];
-    for (r[(n.length >> 2) - 1] = void 0,
-           t = 0; t < r.length; t += 1)
-      r[t] = 0;
-    var e = 8 * n.length;
-    for (t = 0; t < e; t += 8)
-      r[t >> 5] |= (255 & n.charCodeAt(t / 8)) << t % 32;
-    return r
-  }
-
-  function h(n) {
-    return a(i(d(n), 8 * n.length))
-  }
-
-  function l(n, t) {
-    var r, e, o = d(n), u = [], c = [];
-    for (u[15] = c[15] = void 0,
-         o.length > 16 && (o = i(o, 8 * n.length)),
-           r = 0; r < 16; r += 1)
-      u[r] = 909522486 ^ o[r],
-        c[r] = 1549556828 ^ o[r];
-    return e = i(u.concat(d(t)), 512 + 8 * t.length),
-      a(i(c.concat(e), 640))
-  }
-
-  function g(n) {
-    var t, r, e = "";
-    for (r = 0; r < n.length; r += 1)
-      t = n.charCodeAt(r),
-        e += "0123456789abcdef".charAt(t >>> 4 & 15) + "0123456789abcdef".charAt(15 & t);
-    return e
-  }
-
-  function v(n) {
-    return unescape(encodeURIComponent(n))
-  }
-
-  function m(n) {
-    return h(v(n))
-  }
-
-  function p(n) {
-    return g(m(n))
-  }
-
-  function s(n, t) {
-    return l(v(n), v(t))
-  }
-
-  function C(n, t) {
-    return g(s(n, t))
-  }
-
-  function A(n, t, r) {
-    return t ? r ? s(t, n) : C(t, n) : r ? m(n) : p(n)
-  }
-
-  $.md5 = A
-}(this);
+!function(n){"use strict";function r(n,r){var t=(65535&n)+(65535&r);return(n>>16)+(r>>16)+(t>>16)<<16|65535&t}function t(n,r){return n<<r|n>>>32-r}function u(n,u,e,o,c,f){return r(t(r(r(u,n),r(o,f)),c),e)}function e(n,r,t,e,o,c,f){return u(r&t|~r&e,n,r,o,c,f)}function o(n,r,t,e,o,c,f){return u(r&e|t&~e,n,r,o,c,f)}function c(n,r,t,e,o,c,f){return u(r^t^e,n,r,o,c,f)}function f(n,r,t,e,o,c,f){return u(t^(r|~e),n,r,o,c,f)}function i(n,t){n[t>>5]|=128<<t%32,n[14+(t+64>>>9<<4)]=t;var u,i,a,h,g,l=1732584193,d=-271733879,v=-1732584194,C=271733878;for(u=0;u<n.length;u+=16)i=l,a=d,h=v,g=C,d=f(d=f(d=f(d=f(d=c(d=c(d=c(d=c(d=o(d=o(d=o(d=o(d=e(d=e(d=e(d=e(d,v=e(v,C=e(C,l=e(l,d,v,C,n[u],7,-680876936),d,v,n[u+1],12,-389564586),l,d,n[u+2],17,606105819),C,l,n[u+3],22,-1044525330),v=e(v,C=e(C,l=e(l,d,v,C,n[u+4],7,-176418897),d,v,n[u+5],12,1200080426),l,d,n[u+6],17,-1473231341),C,l,n[u+7],22,-45705983),v=e(v,C=e(C,l=e(l,d,v,C,n[u+8],7,1770035416),d,v,n[u+9],12,-1958414417),l,d,n[u+10],17,-42063),C,l,n[u+11],22,-1990404162),v=e(v,C=e(C,l=e(l,d,v,C,n[u+12],7,1804603682),d,v,n[u+13],12,-40341101),l,d,n[u+14],17,-1502002290),C,l,n[u+15],22,1236535329),v=o(v,C=o(C,l=o(l,d,v,C,n[u+1],5,-165796510),d,v,n[u+6],9,-1069501632),l,d,n[u+11],14,643717713),C,l,n[u],20,-373897302),v=o(v,C=o(C,l=o(l,d,v,C,n[u+5],5,-701558691),d,v,n[u+10],9,38016083),l,d,n[u+15],14,-660478335),C,l,n[u+4],20,-405537848),v=o(v,C=o(C,l=o(l,d,v,C,n[u+9],5,568446438),d,v,n[u+14],9,-1019803690),l,d,n[u+3],14,-187363961),C,l,n[u+8],20,1163531501),v=o(v,C=o(C,l=o(l,d,v,C,n[u+13],5,-1444681467),d,v,n[u+2],9,-51403784),l,d,n[u+7],14,1735328473),C,l,n[u+12],20,-1926607734),v=c(v,C=c(C,l=c(l,d,v,C,n[u+5],4,-378558),d,v,n[u+8],11,-2022574463),l,d,n[u+11],16,1839030562),C,l,n[u+14],23,-35309556),v=c(v,C=c(C,l=c(l,d,v,C,n[u+1],4,-1530992060),d,v,n[u+4],11,1272893353),l,d,n[u+7],16,-155497632),C,l,n[u+10],23,-1094730640),v=c(v,C=c(C,l=c(l,d,v,C,n[u+13],4,681279174),d,v,n[u],11,-358537222),l,d,n[u+3],16,-722521979),C,l,n[u+6],23,76029189),v=c(v,C=c(C,l=c(l,d,v,C,n[u+9],4,-640364487),d,v,n[u+12],11,-421815835),l,d,n[u+15],16,530742520),C,l,n[u+2],23,-995338651),v=f(v,C=f(C,l=f(l,d,v,C,n[u],6,-198630844),d,v,n[u+7],10,1126891415),l,d,n[u+14],15,-1416354905),C,l,n[u+5],21,-57434055),v=f(v,C=f(C,l=f(l,d,v,C,n[u+12],6,1700485571),d,v,n[u+3],10,-1894986606),l,d,n[u+10],15,-1051523),C,l,n[u+1],21,-2054922799),v=f(v,C=f(C,l=f(l,d,v,C,n[u+8],6,1873313359),d,v,n[u+15],10,-30611744),l,d,n[u+6],15,-1560198380),C,l,n[u+13],21,1309151649),v=f(v,C=f(C,l=f(l,d,v,C,n[u+4],6,-145523070),d,v,n[u+11],10,-1120210379),l,d,n[u+2],15,718787259),C,l,n[u+9],21,-343485551),l=r(l,i),d=r(d,a),v=r(v,h),C=r(C,g);return[l,d,v,C]}function a(n){var r,t="",u=32*n.length;for(r=0;r<u;r+=8)t+=String.fromCharCode(n[r>>5]>>>r%32&255);return t}function h(n){var r,t=[];for(t[(n.length>>2)-1]=void 0,r=0;r<t.length;r+=1)t[r]=0;var u=8*n.length;for(r=0;r<u;r+=8)t[r>>5]|=(255&n.charCodeAt(r/8))<<r%32;return t}function g(n){return a(i(h(n),8*n.length))}function l(n,r){var t,u,e=h(n),o=[],c=[];for(o[15]=c[15]=void 0,e.length>16&&(e=i(e,8*n.length)),t=0;t<16;t+=1)o[t]=909522486^e[t],c[t]=1549556828^e[t];return u=i(o.concat(h(r)),512+8*r.length),a(i(c.concat(u),640))}function d(n){var r,t,u="";for(t=0;t<n.length;t+=1)r=n.charCodeAt(t),u+="0123456789abcdef".charAt(r>>>4&15)+"0123456789abcdef".charAt(15&r);return u}function v(n){return unescape(encodeURIComponent(n))}function C(n){return g(v(n))}function A(n){return d(C(n))}function m(n,r){return l(v(n),v(r))}function s(n,r){return d(m(n,r))}function b(n,r,t){return r?t?m(r,n):s(r,n):t?C(n):A(n)}$.md5=b}();
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 !(async () => {
   if (!cookiesArr[0]) {
@@ -199,7 +78,7 @@ function getJdFactory() {
                 $.taskVos.map((item) => {
                   if (item.taskType === 14) {
                     console.log(
-                      `【账号${$.index}（${$.nickName || $.UserName}）东东工厂】${item.assistTaskDetailVo.taskToken}`
+                      `【京东账号${$.index}（${$.nickName || $.UserName}）东东工厂】${item.assistTaskDetailVo.taskToken}`
                     );
                   }
                 });
@@ -263,7 +142,7 @@ function getJxFactory(){
                   $.commodityDimId = production.commodityDimId;
                   $.encryptPin = data.user.encryptPin;
                   // subTitle = data.user.pin;
-                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜工厂】${data.user.encryptPin}`);
+                  console.log(`【京东账号${$.index}（${$.nickName || $.UserName}）京喜工厂】${data.user.encryptPin}`);
                 }
               } else {
                 $.unActive = false; //标记是否开启了京喜活动或者选购了商品进行生产
@@ -329,9 +208,9 @@ function getJxNc(){
                     'joinnum': data.joinnum,
                   };
                   console.log(`注意：京喜农场 种植种子发生变化的时候，互助码也会变！！`);
-                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场】` + JSON.stringify(shareCodeJson));
+                  console.log(`【京东账号${$.index}（${$.nickName || $.UserName}）京喜农场】` + JSON.stringify(shareCodeJson));
                 } else {
-                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场】未选择种子，请先去京喜农场选择种子`);
+                  console.log(`【京东账号${$.index}（${$.nickName || $.UserName}）京喜农场】未选择种子，请先去京喜农场选择种子`);
                 }
               }
             } else {
@@ -400,7 +279,7 @@ function getJdPet(){
             }
 
             console.log(
-              `【账号${$.index}（${$.nickName || $.UserName}）京东萌宠】${$.petInfo.shareCode}`
+              `【京东账号${$.index}（${$.nickName || $.UserName}）京东萌宠】${$.petInfo.shareCode}`
             );
 
           } else if (initPetTownRes.code === "0") {
@@ -419,10 +298,9 @@ function getJdPet(){
 }
 async function getJdZZ() {
   const JDZZ_API_HOST = "https://api.m.jd.com/client.action";
-
-  function getUserInfo() {
+  function getTaskList() {
     return new Promise(resolve => {
-      $.get(taskZZUrl("interactIndex"), async (err, resp, data) => {
+      $.get(taskZZUrl("interactTaskIndex"), async (err, resp, data) => {
         try {
           if (err) {
             console.log(`${JSON.stringify(err)}`)
@@ -430,10 +308,9 @@ async function getJdZZ() {
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
-              if (data.data.shareTaskRes) {
-                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京东赚赚】${data.data.shareTaskRes.itemId}`);
-              } else {
-                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京东赚赚】已满5人助力或助力功能已下线,故暂时无好友助力码`)
+              $.taskList = data.data.taskDetailResList;
+              if ($.taskList.filter(item => !!item && item['taskId']=== 3) && $.taskList.filter(item => !!item && item['taskId']=== 3).length) {
+                console.log(`【京东账号${$.index}（${$.nickName || $.UserName}）的京东赚赚好友互助码】${$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId']}`);
               }
             }
           }
@@ -462,7 +339,7 @@ async function getJdZZ() {
     }
   }
 
-  await getUserInfo()
+  await getTaskList()
 }
 async function getPlantBean() {
   const JDplant_API_HOST = "https://api.m.jd.com/client.action";
@@ -532,7 +409,7 @@ async function getPlantBean() {
     if ($.plantBeanIndexResult.code === "0") {
       const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl;
       $.myPlantUuid = getParam(shareUrl, "plantUuid");
-      console.log(`【账号${$.index}（${$.nickName || $.UserName}）种豆得豆】${$.myPlantUuid}`);
+      console.log(`【京东账号${$.index}（${$.nickName || $.UserName}）种豆得豆】${$.myPlantUuid}`);
 
     } else {
       console.log(
@@ -597,7 +474,7 @@ async function getJDFruit() {
     await initForFarm();
     if ($.farmInfo.farmUserPro) {
       console.log(
-        `【账号${$.index}（${$.nickName || $.UserName}）京东农场】${$.farmInfo.farmUserPro.shareCode}`
+        `【京东账号${$.index}（${$.nickName || $.UserName}）京东农场】${$.farmInfo.farmUserPro.shareCode}`
       );
 
     } else {
@@ -643,7 +520,7 @@ async function getJoy(){
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.success && data.data && data.data.userInviteCode) {
-              console.log(`【账号${$.index}（${$.nickName || $.UserName}）crazyJoy】${data.data.userInviteCode}`)
+              console.log(`【京东账号${$.index}（${$.nickName || $.UserName}）crazyJoy】${data.data.userInviteCode}`)
             }
           }
         }
@@ -671,20 +548,14 @@ async function getSgmh(timeout = 0) {
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
-        body : `functionId=interact_template_getHomeData&body={"appId":"1EFRRxA","taskToken":""}&client=wh5&clientVersion=1.0.0`
+        body : `functionId=interact_template_getHomeData&body={"appId":"1EFRXxg","taskToken":""}&client=wh5&clientVersion=1.0.0`
       }
-
       $.post(url, async (err, resp, data) => {
         try {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data.data.bizCode === 0) {
-              for (let i = 0; i < data.data.result.taskVos.length; i++) {
-                if (data.data.result.taskVos[i].taskName === '邀人助力任务') {
-                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）闪购盲盒】${data.data.result.taskVos[i].assistTaskDetailVo.taskToken}`)
-                }
-              }
-            }
+          data = JSON.parse(data);
+          if (data.data.bizCode === 0) {
+            const invites  = data.data.result.taskVos.filter(item => item['taskName'] === '邀请好友助力');
+            console.log(`【京东账号${$.index}（${$.nickName || $.UserName}）闪购盲盒】${invites && invites[0]['assistTaskDetailVo']['taskToken']}`)
           }
         } catch (e) {
           $.logErr(e, resp);
@@ -695,17 +566,97 @@ async function getSgmh(timeout = 0) {
     },timeout)
   })
 }
+//财富岛
+function getCFD(showInvite = true) {
+  function taskUrl(function_path, body) {
+    return {
+      url: `https://m.jingxi.com/jxcfd/${function_path}?strZone=jxcfd&bizCode=jxcfd&source=jxcfd&dwEnv=7&_cfd_t=${Date.now()}&ptag=138631.26.55&${body}&_ste=1&_=${Date.now()}&sceneval=2&g_login_type=1&g_ty=ls`,
+      headers: {
+        Cookie: cookie,
+        Accept: "*/*",
+        Connection: "keep-alive",
+        Referer:"https://st.jingxi.com/fortune_island/index.html?ptag=138631.26.55",
+        "Accept-Encoding": "gzip, deflate, br",
+        Host: "m.jingxi.com",
+        "User-Agent":`jdpingou;iPhone;3.15.2;14.2.1;ea00763447803eb0f32045dcba629c248ea53bb3;network/wifi;model/iPhone13,2;appBuild/100365;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2015_311210;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`,
+        "Accept-Language": "zh-cn",
+      },
+    };
+  }
+  return new Promise(async (resolve) => {
+    $.get(taskUrl(`user/QueryUserInfo`), (err, resp, data) => {
+      try {
+        const {
+          iret,
+          SceneList = {},
+          XbStatus: { XBDetail = [], dwXBRemainCnt } = {},
+          ddwMoney,
+          dwIsNewUser,
+          sErrMsg,
+          strMyShareId,
+          strPin,
+        } = JSON.parse(data);
+        console.log(`【京东账号${$.index}（${$.nickName || $.UserName}）财富岛】${strMyShareId}`)
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    });
+  });
+}
+//领现金
+function getJdCash() {
+  function taskUrl(functionId, body = {}) {
+    return {
+      url: `https://api.m.jd.com/client.action?functionId=${functionId}&body=${escape(JSON.stringify(body))}&appid=CashRewardMiniH5Env&appid=9.1.0`,
+      headers: {
+        'Cookie': cookie,
+        'Host': 'api.m.jd.com',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/json',
+        'Referer': 'http://wq.jd.com/wxapp/pages/hd-interaction/index/index',
+        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        'Accept-Language': 'zh-cn',
+        'Accept-Encoding': 'gzip, deflate, br',
+      }
+    }
+  }
+  return new Promise((resolve) => {
+    $.get(taskUrl("cash_mob_home",), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if(data.code===0 && data.data.result){
+              console.log(`【京东账号${$.index}（${$.nickName || $.UserName}）签到领现金】${data.data.result.inviteCode}`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 async function getShareCode() {
   console.log(`======账号${$.index}开始======`)
+  await getJDFruit()
+  await getJdPet()
+  await getPlantBean()
   await getJdFactory()
   await getJxFactory()
   await getJxNc()
-  await getJdPet()
-  await getPlantBean()
-  await getJDFruit()
   await getJdZZ()
   await getJoy()
   await getSgmh()
+  await getCFD()
+  await getJdCash()
   console.log(`======账号${$.index}结束======\n`)
 }
 
@@ -747,7 +698,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`)
           }
