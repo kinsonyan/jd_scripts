@@ -4,7 +4,7 @@
 name: jd_moneyTree
 
 on:
-
+  workflow_dispatch:
   schedule:
     - cron: '3 0-23/2 * * *' #此处为UTC-0时间
   watch:
