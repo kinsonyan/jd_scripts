@@ -8,27 +8,27 @@
 ============Quantumultx===============
 [task_local]
 # 京东赚赚
-10 0 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jdzz.js, tag=京东赚赚, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzz.png, enabled=true
+10 0 * * * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_jdzz.js, tag=京东赚赚, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzz.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 0 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jdzz.js,tag=京东赚赚
+cron "10 0 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_jdzz.js,tag=京东赚赚
 
 ===============Surge=================
-京东赚赚 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jdzz.js
+京东赚赚 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_jdzz.js
 
 ============小火箭=========
-京东赚赚 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jdzz.js, cronexpr="10 0 * * *", timeout=3600, enable=true
+京东赚赚 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_jdzz.js, cronexpr="10 0 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东赚赚');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let helpAuthor=true; // 帮助作者
-const randomCount = $.isNode() ? 20 : 5;
+let helpAuthor=false; // 帮助作者
+const randomCount = 0;//const randomCount = $.isNode() ? 20 : 5;
 let jdNotify = true; // 是否关闭通知，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '', message;
+let cookiesArr = [], cookie = '', message = '', allMessage = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -36,21 +36,22 @@ if ($.isNode()) {
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
+									   
+													
+					   
+																	  
+					   
+																							 
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
   'SZ3_rmZ-VI8ds@S5KkcRx0c81zXc0-gxaYPIQ@S5KkcRx8epgDUJEzxlfUDcg@S5KkcRU8Y9lbecUzykvEDdg@Sv_50RR4Z9lXTIh6b1A',
   'SZ3_rmZ-VI8ds@S5KkcRx0c81zXc0-gxaYPIQ@S5KkcRx8epgDUJEzxlfUDcg@S5KkcRU8Y9lbecUzykvEDdg@Sv_50RR4Z9lXTIh6b1A',
   'SZ3_rmZ-VI8ds@S5KkcRx0c81zXc0-gxaYPIQ@S5KkcRx8epgDUJEzxlfUDcg@S5KkcRU8Y9lbecUzykvEDdg@Sv_50RR4Z9lXTIh6b1A',
-  'SZ3_rmZ-VI8ds@S5KkcRx0c81zXc0-gxaYPIQ@S5KkcRx8epgDUJEzxlfUDcg@S5KkcRU8Y9lbecUzykvEDdg@Sv_50RR4Z9lXTIh6b1A'
+  'SZ3_rmZ-VI8ds@S5KkcRx0c81zXc0-gxaYPIQ@S5KkcRx8epgDUJEzxlfUDcg@S5KkcRU8Y9lbecUzykvEDdg@Sv_50RR4Z9lXTIh6b1A'																																													 
 ]
+let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000);
 !(async () => {
   $.tuanList = []
   await requireConfig();
@@ -82,6 +83,12 @@ const inviteCodes = [
       await jdWish()
     }
   }
+  if (allMessage) {
+    //NODE端,默认每月一日运行进行推送通知一次
+    if ($.isNode() && nowTimes.getDate() === 1 && (process.env.JDZZ_NOTIFY_CONTROL ? process.env.JDZZ_NOTIFY_CONTROL === 'false' : !!1)) {
+      await notify.sendNotify($.name, allMessage);
+    }
+  }
   for (let i = 0; i < cookiesArr.length; i++) {
     $.canHelp = true
     if (cookiesArr[i]) {
@@ -104,6 +111,7 @@ async function jdWish() {
   $.bean = 0
   $.tuan = null
   $.hasOpen = false
+  await getTaskList(true)
   await getUserTuanInfo()
   if (!$.tuan) {
     await openTuan()
@@ -113,7 +121,7 @@ async function jdWish() {
 
   await helpFriends()
   await getUserInfo()
-  await getTaskList()
+					 
   $.nowBean = parseInt($.totalBeanNum)
   $.nowNum = parseInt($.totalNum)
   for (let i = 0; i < $.taskList.length; ++i) {
@@ -137,14 +145,16 @@ async function jdWish() {
 function showMsg() {
   return new Promise(async resolve => {
     message += `本次获得${parseInt($.totalBeanNum) - $.nowBean}京豆，${parseInt($.totalNum) - $.nowNum}金币\n`
-    message += `累计获得${$.totalBeanNum}京豆，${$.totalNum}金币\n可兑换${$.totalNum / 10000}元无门槛红包`
+    message += `累计获得${$.totalBeanNum}京豆，${$.totalNum}金币\n可兑换${$.totalNum / 10000}元无门槛红包\n兑换入口:京东赚赚微信小程序->赚好礼->金币提现`
     if (parseInt($.totalBeanNum) - $.nowBean > 0) {
+      //IOS运行获得京豆大于0通知
       $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`);
     } else {
       $.log(message)
     }
     // 云端大于10元无门槛红包时进行通知推送
-    if ($.isNode() && $.totalNum >= 1000000) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index} ${$.nickName}\n当前金币：${$.totalNum}个\n可兑换无门槛红包：${parseInt($.totalNum) / 10000}元\n`,)
+    // if ($.isNode() && $.totalNum >= 1000000) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index} ${$.nickName}\n当前金币：${$.totalNum}个\n可兑换无门槛红包：${parseInt($.totalNum) / 10000}元\n`,)
+    allMessage += `京东账号${$.index} ${$.nickName}\n当前金币：${$.totalNum}个\n可兑换无门槛红包：${parseInt($.totalNum) / 10000}元\n兑换入口:京东赚赚微信小程序->赚好礼->金币提现${$.index !== cookiesArr.length ? '\n\n' : ''}`;
     resolve();
   })
 }
@@ -264,11 +274,11 @@ function getUserInfo() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data.data.shareTaskRes) {
-              console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.shareTaskRes.itemId}\n`);
-            } else {
-              console.log(`\n\n已满5人助力或助力功能已下线,故暂时无${$.name}好友助力码\n\n`)
-            }
+            // if (data.data.shareTaskRes) {
+            //   console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.shareTaskRes.itemId}\n`);
+            // } else {
+            //   console.log(`\n\n已满5人助力或助力功能已下线,故暂时无${$.name}好友助力码\n\n`)
+            // }
           }
         }
       } catch (e) {
@@ -280,7 +290,7 @@ function getUserInfo() {
   })
 }
 
-function getTaskList() {
+function getTaskList(flag = false) {
   return new Promise(resolve => {
     $.get(taskUrl("interactTaskIndex"), async (err, resp, data) => {
       try {
@@ -293,6 +303,9 @@ function getTaskList() {
             $.taskList = data.data.taskDetailResList
             $.totalNum = data.data.totalNum
             $.totalBeanNum = data.data.totalBeanNum
+            if (flag && $.taskList.filter(item => !!item && item['taskId']=== 3) && $.taskList.filter(item => !!item && item['taskId']=== 3).length) {
+              console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId']}\n`);
+            }
           }
         }
       } catch (e) {
@@ -489,7 +502,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`)
           }
