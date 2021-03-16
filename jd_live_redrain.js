@@ -1,15 +1,32 @@
 /*
-30,31 20-23/1 5,9 3 * jd_live_redrain.js
+超级直播间红包雨 新增3.12日，3.16日
+
+脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
+==============Quantumult X==============
+[task_local]
+#超级直播间红包雨
+30,31 20-23/1 * * * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_live_redrain.js, tag=超级直播间红包雨, enabled=true
+
+==============Loon==============
+[Script]
+cron "30,31 20-23/1 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_live_redrain.js,tag=超级直播间红包雨
+
+================Surge===============
+超级直播间红包雨 = type=cron,cronexp="30,31 20-23/1 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_live_redrain.js
+
+===============小火箭==========
+超级直播间红包雨 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_live_redrain.js, cronexpr="30,31 20-23/1 * * *", timeout=3600, enable=true
 */
 const $ = new Env('超级直播间红包雨');
+let allMessage = '';
 let bodyList = {
-  '5': {
-    url: 'https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1614921454051&sign=5dee8ffb2097a0971f6db222c5a72e44&sv=111',
-    body: 'body=%7B%22liveId%22%3A%223554417%22%7D'
+  '12': {
+    url: 'https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1615468728099&sign=4aa630a409b136aefa993c9980fd9a63&sv=101',
+    body: 'body=%7B%22liveId%22%3A%223649497%22%7D'
   },
-  '9': {
-    url: 'https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1614921453083&sign=a67dd2c499dcb3b0f27e810e5f15f316&sv=111',
-    body: 'body=%7B%22liveId%22%3A%223623574%22%7D'
+  '16': {
+    url: 'https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1615468726059&sign=60005fa89f99116a2707cb31fb7debac&sv=120',
+    body: 'body=%7B%22liveId%22%3A%223665668%22%7D'
   }
 }
 let ids = {
@@ -46,7 +63,8 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.activityId = ids[hour]
       $.log(`本地红包雨配置获取成功`)
     } else{
-      $.log(`无法从本地读取配置，请检查运行时间`)
+      $.log(`无法从本地读取配置，请检查运行时间(注：非红包雨时间执行出现此提示请忽略！！！！！！！！！！！)`)
+      $.log(`出现异常提示请忽略。红包雨期间会正常，此脚本提issue打死！！！！！！！！！！！)`)
       return
     }
   } else{
@@ -67,16 +85,20 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : ""}`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+				
+																																																							  
         }
         continue
       }
       let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
       // console.log(nowTs, $.startTime, $.endTime)
       await receiveRedRain();
-      await showMsg();
+      // await showMsg();
     }
+  }
+  if (allMessage) {
+    if ($.isNode()) await notify.sendNotify(`${$.name}`, `${allMessage}`);
+    $.msg($.name, '', allMessage);
   }
 })()
   .catch((e) => {
@@ -154,7 +176,7 @@ function receiveRedRain() {
               console.log(`领取成功，获得${JSON.stringify(data.lotteryResult)}`)
               // message+= `领取成功，获得${JSON.stringify(data.lotteryResult)}\n`
               message += `领取成功，获得 ${(data.lotteryResult.jPeasList[0].quantity)}京豆`
-
+              allMessage += `京东账号${$.index}${$.nickName}\n领取成功，获得 ${(data.lotteryResult.jPeasList[0].quantity)}京豆${$.index !== cookiesArr.length ? '\n\n' : ''}`;
             } else if (data.subCode === '8') {
               console.log(`今日次数已满`)
               message += `领取失败，本场已领过`;
@@ -249,7 +271,7 @@ function TotalBean() {
               return
             }
             if (data['retcode'] === 0) {
-              $.nickName = data['base'].nickname;
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
             } else {
               $.nickName = $.UserName
             }
