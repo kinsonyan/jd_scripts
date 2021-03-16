@@ -671,7 +671,7 @@ function taskGetUrl(function_id, body) {
       'Connection': 'keep-alive',
 										  
 							   
-      'user-agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      'user-agent': 'jdapp;iPhone;9.3.0;14.2;88732f840b77821b345bf07fd71f609e6ff12f43;network/4g;ADID/0E38E9F1-4B4C-40A4-A479-DD15E58A5623;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone11,8;addressid/2005183373;supportBestPay/0;appBuild/167436;pushNoticeIsOpen/0;jdSupportDarkMode/0;pv/142.46;apprpd/CouponCenter;ref/NewCouponCenterViewController;psq/44;ads/;psn/88732f840b77821b345bf07fd71f609e6ff12f43|551;jdv/0|kong|t_1000170135|tuiguang|notset|1607732510603|1607732510;adk/;app_device/IOS;pap/JA2015_311210|9.2.5|IOS 14.2;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
       'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
       'Accept-Encoding': 'gzip, deflate, br',
       'Content-Type': "application/x-www-form-urlencoded",
