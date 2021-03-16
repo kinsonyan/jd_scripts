@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_joy_steal
+name: jd_price
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 0-21/3 * * *'
+    - cron: '0 18 * * *' #此处为UTC-0时间
   watch:
     types: started
   repository_dispatch:
-    types: joy_steal
+    types: price
 jobs:
   build:
 
@@ -35,13 +35,12 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【宠汪汪偷好友狗粮与积分】'
+      - name: '运行 【京东保价】'
         run: |
-          node jd_joy_steal.js
+          node jd_price.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
-          JOY_HELP_FEED: ${{ secrets.JOY_HELP_FEED }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}

@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_asus_iqiyi
+name: jd_crazy_joy
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '1 16 22-28 2 *' #此处为UTC-0时间
+    - cron: '10 23 * * *' #此处为UTC-0时间
   watch:
     types: started
   repository_dispatch:
-    types: asus_iqiyi
+    types: crazy_joy
 jobs:
   build:
 
@@ -35,9 +35,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【华硕-爱奇艺】'
+      - name: '运行 【crazyJoy任务】'
         run: |
-          node jd_asus_iqiyi.js
+          node jd_crazy_joy.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}

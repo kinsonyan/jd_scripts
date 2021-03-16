@@ -2,23 +2,23 @@
 领京豆额外奖励&抢京豆
 脚本自带助力码，介意者可将 29行 helpAuthor 变量设置为 false
 活动入口：京东APP首页-领京豆
-更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_home.js
+更新地址：https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_home.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #领京豆额外奖励
-10 7 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_home.js, tag=领京豆额外奖励, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_bean_home.png, enabled=true
+10 7 * * * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_home.js, tag=领京豆额外奖励, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_bean_home.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 7 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_home.js, tag=领京豆额外奖励
+cron "10 7 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_home.js, tag=领京豆额外奖励
 
 ===============Surge=================
-领京豆额外奖励 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_home.js
+领京豆额外奖励 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_home.js
 
 ============小火箭=========
-领京豆额外奖励 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_home.js, cronexpr="10 7 * * *", timeout=3600, enable=true
+领京豆额外奖励 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_home.js, cronexpr="10 7 * * *", timeout=3600, enable=true
  */
 const $ = new Env('领京豆额外奖励');
 
@@ -36,13 +36,13 @@ if ($.isNode()) {
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
+									   
+													
+					   
+																	  
+					   
+																							 
 }
 const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
@@ -126,7 +126,8 @@ async function jdBeanHome() {
   await $.wait(1000)
   await getUserInfo()
   await $.wait(1000)
-  await getTaskList()
+  await getTaskList();
+  await receiveJd2();
   await showMsg();
 }
 
@@ -313,7 +314,7 @@ function help(shareCode, groupCode, isTask = 0) {
 
 function showMsg() {
   return new Promise(resolve => {
-    $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    if (message) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })
 }
@@ -398,7 +399,7 @@ function award(source="home") {
               message += `领奖成功，获得 ${data.data.beanNum} 个京豆\n`
             } else {
               console.log(`领奖失败，${data.errorMessage}`)
-              message += `领奖失败，${data.errorMessage}\n`
+              // message += `领奖失败，${data.errorMessage}\n`
             }
           }
         }
@@ -410,7 +411,46 @@ function award(source="home") {
     })
   })
 }
-
+function receiveJd2() {
+  var headers = {
+    'Host': 'api.m.jd.com',
+    'content-type': 'application/x-www-form-urlencoded',
+    'accept': '*/*',
+    'user-agent': 'JD4iPhone/167515 (iPhone; iOS 14.2; Scale/3.00)',
+    'accept-language': 'zh-Hans-JP;q=1, en-JP;q=0.9, zh-Hant-TW;q=0.8, ja-JP;q=0.7, en-US;q=0.6',
+    'Cookie': cookie
+  };
+  var dataString = 'body=%7B%7D&build=167576&client=apple&clientVersion=9.4.3&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=TF&rfs=0000&scope=10&screen=1242%2A2208&sign=19c33b5b9ad4f02c53b6040fc8527119&st=1614701322170&sv=122'
+  var options = {
+    url: 'https://api.m.jd.com/client.action?functionId=sceneInitialize',
+    headers: headers,
+    body: dataString
+  };
+  return new Promise(resolve => {
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data['code'] === '0' && data['data']) {
+              console.log(`强制开启新版领京豆成功,获得${data['data']['sceneLevelConfig']['beanNum']}京豆\n`);
+              $.msg($.name, '', `强制开启新版领京豆成功\n获得${data['data']['sceneLevelConfig']['beanNum']}京豆`);
+            } else {
+              console.log(`强制开启新版领京豆结果:${JSON.stringify(data)}\n`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 function taskGetUrl(function_id, body) {
   return {
     url: `${JD_API_HOST}client.action?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&clientVersion=9.2.0`,
@@ -475,7 +515,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`)
           }

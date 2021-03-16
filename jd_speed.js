@@ -1,5 +1,5 @@
 /*
-京东天天加速链接：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js
+京东天天加速链接：https://jdsharedresourcescdn.azureedge.net/jdresource/jd_speed.js
 更新时间：2020-12-25
 活动入口：京东APP我的-更多工具-天天加速
 支持京东双账号
@@ -10,17 +10,17 @@
 =================QuantumultX==============
 [task_local]
 #天天加速
-8 0-23/3 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
+8 0-23/3 * * * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
 
 ============Loon================
 [Script]
-cron "8 0-23/3 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js,tag=京东天天加速
+cron "8 0-23/3 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_speed.js,tag=京东天天加速
 
 ===========Surge============
-天天加速 = type=cron,cronexp="8 0-23/3 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js
+天天加速 = type=cron,cronexp="8 0-23/3 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_speed.js
 
 ==============小火箭=============
-天天加速 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js, cronexpr="11 0-23/3 * * *", timeout=3600, enable=true
+天天加速 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_speed.js, cronexpr="11 0-23/3 * * *", timeout=3600, enable=true
 */
 
 const $ = new Env('✈️天天加速');
@@ -36,13 +36,13 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
+									   
+													
+					   
+																	  
+					   
+																							 
 }
 let jdNotify = true;//是否开启静默运行。默认true开启
 let message = '', subTitle = '';
@@ -642,7 +642,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`)
           }

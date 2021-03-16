@@ -6,17 +6,17 @@
 ============Quantumultx===============
 [task_local]
 #口袋书店
-1 8,12,18 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bookshop.js, tag=口袋书店, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+1 8,12,18 * * * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bookshop.js, tag=口袋书店, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "1 8,12,18 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bookshop.js,tag=口袋书店
+cron "1 8,12,18 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bookshop.js,tag=口袋书店
 
 ===============Surge=================
-口袋书店 = type=cron,cronexp="1 8,12,18 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bookshop.js
+口袋书店 = type=cron,cronexp="1 8,12,18 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bookshop.js
 
 ============小火箭=========
-口袋书店 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bookshop.js, cronexpr="1 8,12,18* * *", timeout=3600, enable=true
+口袋书店 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bookshop.js, cronexpr="1 8,12,18* * *", timeout=3600, enable=true
  */
 const $ = new Env('口袋书店');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -33,7 +33,7 @@ let inviteCodes = [
   '04e1cb2b92c44324b7c480c4e5b3d81b@645803a86f8c428ab2d7abfc998b129a@00e97dd68b344fdfb74cf39a7ee01340',
   '2a2860c92da24541a01fdb78b0548530@645803a86f8c428ab2d7abfc998b129a@00e97dd68b344fdfb74cf39a7ee01340',
   '2a2860c92da24541a01fdb78b0548530@04e1cb2b92c44324b7c480c4e5b3d81b@00e97dd68b344fdfb74cf39a7ee01340',
-  '2a2860c92da24541a01fdb78b0548530@04e1cb2b92c44324b7c480c4e5b3d81b@645803a86f8c428ab2d7abfc998b129a'
+  '2a2860c92da24541a01fdb78b0548530@04e1cb2b92c44324b7c480c4e5b3d81b@645803a86f8c428ab2d7abfc998b129a'																																									 
 ]
 
 if ($.isNode()) {
@@ -43,13 +43,13 @@ if ($.isNode()) {
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
+									   
+													
+					   
+																	  
+					   
+																							 
 }
 
 !(async () => {
@@ -291,7 +291,8 @@ function getActContent(info = false, shareUuid = '') {
                 return
               }
               $.actorUuid = $.userInfo.actorUuid
-              if(!info) console.log(`您的好友助力码为${$.actorUuid}`)
+              // if(!info) console.log(`您的好友助力码为${$.actorUuid}`)
+              if(!info) console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.actorUuid}\n`);
               $.gold = $.userInfo.bookStore.hasStoreGold
               if (!info) {
                 const tasks = data.data.settingVo
@@ -641,7 +642,12 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
+            }
+											   
           } else {
             console.log(`京东服务器返回空数据`)
           }

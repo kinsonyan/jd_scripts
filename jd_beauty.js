@@ -31,6 +31,10 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
+  if (!$.isNode()) {
+    $.msg($.name, 'iOS端不支持websocket，暂不能使用此脚本', '');
+    return
+  }
   helpInfo = []
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -81,8 +85,14 @@ async function mr() {
   $.tokens = []
   $.pos = []
   $.helpInfo = []
+  $.needs = []
   const WebSocket = require('ws')
-  let client = new WebSocket(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`)
+  let client = new WebSocket(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`,null,{
+    headers:{
+      'user-agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+    }
+  })
+  console.log(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`)
   client.onopen = async () => {
     console.log(`美容研究院服务器连接成功`);
     client.send('{"msg":{"type":"action","args":{"source":1},"action":"_init_"}}');
@@ -99,12 +109,12 @@ async function mr() {
     // 获得可生产的原料列表
     client.send(`{"msg":{"type":"action","args":{},"action":"get_produce_material"}}`)
     await $.wait(1000)
-    // 获得原料生产列表
-    console.log(`========原料生产信息========`)
-    for (let pos of positionList) {
-      client.send(`{"msg":{"type":"action","args":{"position":"${pos}"},"action":"produce_position_info"}}`)
-      // await $.wait(500)
-    }
+							   
+													 
+								   
+																																																
+						  
+	 
     // 获得正在生产的商品信息
     client.send('{"msg":{"type":"action","args":{},"action":"product_producing"}}')
     await $.wait(1000)
@@ -113,6 +123,14 @@ async function mr() {
     // 获得可生成的商品列表
     client.send(`{"msg":{"type":"action","args":{"page":1,"num":10},"action":"product_lists"}}`)
     await $.wait(1000)
+
+    // 获得原料生产列表
+    console.log(`========原料生产信息========`)
+    for (let pos of positionList) {
+      client.send(`{"msg":{"type":"action","args":{"position":"${pos}"},"action":"produce_position_info"}}`)
+      // await $.wait(500)
+    }
+
     // 获得任务
     client.send(`{"msg":{"type":"action","args":{},"action":"get_task"}}`)
     // 获取个人信息
@@ -124,16 +142,16 @@ async function mr() {
 
   client.onclose = () => {
     console.log(`本次运行获得美妆币${$.coins}`)
-    // console.log('服务器连接关闭');
+    console.log('服务器连接关闭');
     $.hasDone = true
     for (let i = 0; i < $.pos.length && i < $.tokens.length; ++i) {
       $.helpInfo.push(`{"msg":{"type":"action","args":{"inviter_id":"${$.userInfo.id}","position":"${$.pos[i]}","token":"${$.tokens[i]}"},"action":"employee"}}`)
     }
-    console.log($.helpInfo)
+						   
   };
   client.onmessage = async function (e) {
-    if (e.data !== 'pong' && safeGet(e.data)) {
-      let vo = jsonParse(e.data)
+    if (e.data !== 'pong' && e.data && safeGet(e.data)) {
+      let vo = JSON.parse(e.data);
       switch (vo.action) {
         case "get_ad":
           console.log(`当期活动：${vo.data.screen.name}`)
@@ -155,7 +173,8 @@ async function mr() {
             }
           } else
             $.init = true
-          console.log(`当前美妆币${$.total}`)
+          $.level = $.userInfo.level
+          console.log(`当前美妆币${$.total}，用户等级${$.level}`)
           break
         case "shop_products":
           let count = $.taskState.shop_view.length
@@ -249,9 +268,15 @@ async function mr() {
               $.pos.push(vo.data.position)
             }
           } else {
-            console.log(`【${vo.data.position}】上尚未开始生产`)
+																		 
             if (vo.data.valid_electric > 0) {
-              let ma = $.material.base[0]['items'][positionList.indexOf(vo.data.position)]
+              console.log(`【${vo.data.position}】上尚未开始生产`)
+              let ma
+              if($.needs.length){
+                ma = $.needs.pop()
+              }
+              else ma = $.material.base[0]['items'][positionList.indexOf(vo.data.position)]
+              console.log()
               if (ma) {
                 console.log(`去生产${ma.name}`)
                 client.send(`{"msg":{"type":"action","args":{"position":"${vo.data.position}","material_id":${ma.id}},"action":"material_produce"}}`)
@@ -263,6 +288,9 @@ async function mr() {
                 }
               }
             }
+            else{
+              console.log(`【${vo.data.position}】电力不足`)
+            }
           }
           break
         case "material_produce":
@@ -272,8 +300,9 @@ async function mr() {
           break
         case "material_fetch":
           if (vo.code === '200' || vo.code === 200) {
+            console.log(vo)
             console.log(`【${vo.data.position}】收取成功，获得${vo.data.procedure.produce_num}份${vo.data.material_name}`)
-            if (vo.data.coins) $.coins += vo.data.coins
+													   
           } else {
             console.log(`任务完成失败，错误信息${vo.msg}`)
           }
@@ -292,8 +321,9 @@ async function mr() {
           }
           break
         case "product_lists":
+          let need_material = []
           if (vo.code === '200' || vo.code === 200) {
-            $.products = vo.data
+            $.products = vo.data.filter(vo=>vo.level===$.level)
             console.log(`========可生产商品信息========`)
             for (let product of $.products) {
               let num = Infinity
@@ -306,6 +336,8 @@ async function mr() {
                   msg += `（库存 ${ma.num} 份）`
                   num = Math.min(num, Math.trunc(ma.num / material.num))
                 } else {
+                  if(need_material.findIndex(vo=>vo.id===material.material.id)===-1)
+                    need_material.push(material.material)
                   msg += `(没有库存)`
                   num = -1000
                 }
@@ -317,12 +349,14 @@ async function mr() {
                 client.send(`{"msg":{"type":"action","args":{"product_id":${product.id},"amount":${num}},"action":"product_produce"}}`)
                 await $.wait(500)
               } else {
+                console.log(msg)
                 console.log(`【${product.name}】原料不足，无法生产`)
               }
             }
+            $.needs = need_material
             console.log(`=======================`)
           } else {
-            console.log(`生产信息获取失败，错误信息${vo.msg}`)
+            console.log(`生产信息获取失败，错误信息：${vo.msg}`)
           }
           break
         case "product_produce":
@@ -362,7 +396,7 @@ async function mr() {
         case 'get_benefit':
           for (let benefit of vo.data) {
             if (benefit.type === 1) {
-              console.log(benefit)
+								  
               console.log(`物品【${benefit.description}】需要${benefit.coins}美妆币，库存${benefit.stock}份`)
               if (parseInt(benefit.setting.beans_count) === bean &&
                 $.total > benefit.coins &&
@@ -409,12 +443,13 @@ function getIsvToken() {
     $.post(config, async (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${err},${jsonParse(resp.body)['message']}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`${$.name} API请求失败，请检查网路重试`);
+          console.log(`${JSON.stringify(err)}`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
             $.isvToken = data['tokenKey']
+            console.log($.isvToken)
           }
         }
       } catch (e) {
@@ -443,12 +478,13 @@ function getIsvToken2() {
     $.post(config, async (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${err},${jsonParse(resp.body)['message']}`)
+          console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
             $.token2 = data['token']
+            console.log($.token2)
           }
         }
       } catch (e) {
@@ -463,7 +499,7 @@ function getIsvToken2() {
 function getToken() {
   let config = {
     url: 'https://xinruimz-isv.isvjcloud.com/api/auth',
-    body: `{"token":"${$.token2}","source":"01"}`,
+    body: JSON.stringify({"token":$.token2,"source":"01"}),
     headers: {
       'Host': 'xinruimz-isv.isvjcloud.com',
       'Accept': 'application/x.jd-school-island.v1+json',
@@ -471,21 +507,23 @@ function getToken() {
       'Accept-Language': 'zh-cn',
       'Content-Type': 'application/json;charset=utf-8',
       'Origin': 'https://xinruimz-isv.isvjcloud.com',
-      'User-Agent': 'JD4iPhone/167490 (iPhone; iOS 14.2; Scale/3.00)',
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
       'Referer': 'https://xinruimz-isv.isvjcloud.com/logined_jd/',
-      'Cookie': `${cookie} isvToken=${$.isvToken};`
+      'Authorization': 'Bearer undefined',
+      'Cookie': `IsvToken=${$.isvToken};`
     }
   }
   return new Promise(resolve => {
     $.post(config, async (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${err},${jsonParse(resp.body)['message']}`)
+          console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
             $.token = data.access_token
+            console.log($.token)
           }
         }
       } catch (e) {
@@ -532,7 +570,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`)
           }

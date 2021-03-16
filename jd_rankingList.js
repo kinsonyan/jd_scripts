@@ -5,7 +5,7 @@ github： https://github.com/yangtingxiao
 京东排行榜
 更新时间：2020-11-05 16:07
 脚本说明：京东排行榜签到得京豆
-活动入口：找不着了，点击脚本通知进入吧
+活动入口：京东APP首页-更多频道-排行榜-悬浮按钮
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
 [task_local]
