@@ -6,7 +6,7 @@ name: jd_live
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10-20/5 4 * * *' #此处为UTC-0时间
+    - cron: '10-20/5 12 * * *' #此处为UTC-0时间
   watch:
     types: [started]
   repository_dispatch:
