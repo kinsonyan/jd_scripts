@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_jdfactory
+name: z_city_cash
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 * * * *'
+    - cron: '2 16 19-24 3 *' #此处为UTC-0时间
   watch:
     types: started
   repository_dispatch:
-    types: jdfactory
+    types: z_city_cash
 jobs:
   build:
 
@@ -35,19 +35,17 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【东东工厂】'
+      - name: '运行 【城城领现金】'
         run: |
-          node jd_jdfactory.js
+          node z_city_cash.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          FACTORAY_WANTPRODUCT_NAME: ${{ secrets.FACTORAY_WANTPRODUCT_NAME }}
-          JDFACTORY_FORBID_ACCOUNT: ${{ secrets.JDFACTORY_FORBID_ACCOUNT }}
