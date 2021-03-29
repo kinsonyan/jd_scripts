@@ -48,7 +48,6 @@ const inviteCodes = [
   'ysKjlBr0L5dIJW3iTJ8-kA==@yiipgtBqYp_urMYMCbz1hg==@-ow4Hf16dTi6nJjyOULebw==@NicJ_AQB0BtXDWyB7CFcDw==@TaaWof7p1BWR9HJwrUm24Q==',
   'ysKjlBr0L5dIJW3iTJ8-kA==@yiipgtBqYp_urMYMCbz1hg==@-ow4Hf16dTi6nJjyOULebw==@NicJ_AQB0BtXDWyB7CFcDw==@TaaWof7p1BWR9HJwrUm24Q==',
 ]
-co
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 $.tuanIds = [];
 $.appId = 10001;
