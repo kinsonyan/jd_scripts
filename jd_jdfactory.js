@@ -56,10 +56,10 @@ if ($.isNode()) {
 let wantProduct = ``;//心仪商品名称
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
-                     'P04z54XCjVWnYaS5m9cZ2f72HpClcoO4EzIZoY@P04z54XCjVWnYaS5m9cZ2f52i8elkggBtXHCYI@P04z54XCjVWnYaS5m9cZ2Wp3H9InDbehWaC7HQ@P04z54XCjVWnYaS5jQLD2X43X9LkbWcFMo', 
-                     'P04z54XCjVWnYaS5uyKkLl5UarZLg@P04z54XCjVWnYaS5m9cZ2f52i8elkggBtXHCYI@P04z54XCjVWnYaS5m9cZ2Wp3H9InDbehWaC7HQ@P04z54XCjVWnYaS5jQLD2X43X9LkbWcFMo',
-                     'P04z54XCjVWnYaS5uyKkLl5UarZLg@P04z54XCjVWnYaS5m9cZ2f72HpClcoO4EzIZoY@P04z54XCjVWnYaS5m9cZ2Wp3H9InDbehWaC7HQ@P04z54XCjVWnYaS5jQLD2X43X9LkbWcFMo',
-                     'P04z54XCjVWnYaS5uyKkLl5UarZLg@P04z54XCjVWnYaS5m9cZ2f72HpClcoO4EzIZoY@P04z54XCjVWnYaS5m9cZ2f52i8elkggBtXHCYI@P04z54XCjVWnYaS5jQLD2X43X9LkbWcFMo' 
+                     'T012Z3_rmZ-VI8dsCjVWnYaS5kRrbA@T0225KkcRU8Y9lbecUzykvEDdgCjVWnYaS5kRrbA@T018v_50RR4Z9lXTIh6b1ACjVWnYaS5kRrbA', 
+                     'T012Z3_rmZ-VI8dsCjVWnYaS5kRrbA@T0225KkcRU8Y9lbecUzykvEDdgCjVWnYaS5kRrbA@T018v_50RR4Z9lXTIh6b1ACjVWnYaS5kRrbA',
+                     'T012Z3_rmZ-VI8dsCjVWnYaS5kRrbA@T0225KkcRU8Y9lbecUzykvEDdgCjVWnYaS5kRrbA@T018v_50RR4Z9lXTIh6b1ACjVWnYaS5kRrbA',
+                     'T012Z3_rmZ-VI8dsCjVWnYaS5kRrbA@T0225KkcRU8Y9lbecUzykvEDdgCjVWnYaS5kRrbA@T018v_50RR4Z9lXTIh6b1ACjVWnYaS5kRrbA' 
                     ];
 																																																																  
 																																																																  
