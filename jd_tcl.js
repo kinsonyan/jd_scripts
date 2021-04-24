@@ -105,7 +105,7 @@ async function main() {
   await draw()
 }
 
-function helpFriend(inviterNickAes = 'F4A04F6146EBF63096D1EEEB1421673CEDF2AC1FAB6A380204EA464FF555823A76DEBC297C46466047FD3F29C9E6B2340E3006C9E5976ADF7C555C1A05492338DDDA672BF446E2FCC0D1D6B4E52826D1') {
+function helpFriend(inviterNickAes = '4C8602ED441A318612CD57B4A16EB59EE8AF00C05E1043CAA3E9C10B6DA615700C9463CE3D33670238160230F84D490EE29440149504E2EB1EAD11840F8E2980DDDA672BF446E2FCC0D1D6B4E52826D1') {
   return new Promise((resolve) => {
     $.post(taskUrl('/ql/front/tcl002/helpFriend', `inviterNickAes=${inviterNickAes}`), async (err, resp, data) => {
       try {
@@ -326,7 +326,7 @@ function draw() {
 function genToken() {
   let config = {
     url: 'https://api.m.jd.com/client.action?functionId=genToken',
-    body: 'uuid=8888888&client=apple&clientVersion=9.5.2&st=1619194107036&sign=8feb09628c3c7a76dd0f2f8a694eaf79&sv=100&body=%7B%22to%22%3A%22https%3A//mpdz-isv.isvjcloud.com/ql/front/tcl002/loadTclAct%3Fid%3DtclTeamAct002%26user_id%3D10299171%26comeResource%3D10%26bizExtString%3DF4A04F6146EBF63096D1EEEB1421673CEDF2AC1FAB6A380204EA464FF555823A76DEBC297C46466047FD3F29C9E6B2340E3006C9E5976ADF7C555C1A05492338DDDA672BF446E2FCC0D1D6B4E52826D1%22%2C%22action%22%3A%22to%22%7D',
+    body: 'uuid=8888888&client=apple&clientVersion=9.5.2&st=1619194107036&sign=8feb09628c3c7a76dd0f2f8a694eaf79&sv=100&body=%7B%22to%22%3A%22https%3A//mpdz-isv.isvjcloud.com/ql/front/tcl002/loadTclAct%3Fid%3DtclTeamAct002%26user_id%3D10299171%26comeResource%3D10%26bizExtString%3D4C8602ED441A318612CD57B4A16EB59EE8AF00C05E1043CAA3E9C10B6DA615700C9463CE3D33670238160230F84D490EE29440149504E2EB1EAD11840F8E2980DDDA672BF446E2FCC0D1D6B4E52826D1%22%2C%22action%22%3A%22to%22%7D',
     headers: {
       Host: "api.m.jd.com",
       accept: "*/*",
@@ -362,7 +362,7 @@ function genToken() {
 function isvObfuscator() {
   let config = {
     url: 'https://api.m.jd.com/client.action?functionId=isvObfuscator',
-    body: 'uuid=8888888&client=apple&clientVersion=9.5.2&st=1619194362037&sign=1f829aab2583c598c1b6b1feeec5fe05&sv=101&body=%7B%22url%22%3A%22https%3A//mpdz-isv.isvjcloud.com/ql/front/tcl002/loadTclAct%3Fid%3DtclTeamAct002%26user_id%3D10299171%26comeResource%3D10%26bizExtString%3DF4A04F6146EBF63096D1EEEB1421673CEDF2AC1FAB6A380204EA464FF555823A76DEBC297C46466047FD3F29C9E6B2340E3006C9E5976ADF7C555C1A05492338DDDA672BF446E2FCC0D1D6B4E52826D1%22%2C%22id%22%3A%22%22%7D',
+    body: 'uuid=8888888&client=apple&clientVersion=9.5.2&st=1619194362037&sign=1f829aab2583c598c1b6b1feeec5fe05&sv=101&body=%7B%22url%22%3A%22https%3A//mpdz-isv.isvjcloud.com/ql/front/tcl002/loadTclAct%3Fid%3DtclTeamAct002%26user_id%3D10299171%26comeResource%3D10%26bizExtString%3D4C8602ED441A318612CD57B4A16EB59EE8AF00C05E1043CAA3E9C10B6DA615700C9463CE3D33670238160230F84D490EE29440149504E2EB1EAD11840F8E2980DDDA672BF446E2FCC0D1D6B4E52826D1%22%2C%22id%22%3A%22%22%7D',
     headers: {
       Host: "api.m.jd.com",
       accept: "*/*",
@@ -435,7 +435,7 @@ function taskUrl(functionId, body) {
 
 function taskGetUrl() {
   return {
-    url: `https://mpdz-isv.isvjcloud.com/ql/front/tcl002/loadTclAct?id=tclTeamAct002&user_id=10299171&comeResource=10&bizExtString=F4A04F6146EBF63096D1EEEB1421673CEDF2AC1FAB6A380204EA464FF555823A76DEBC297C46466047FD3F29C9E6B2340E3006C9E5976ADF7C555C1A05492338DDDA672BF446E2FCC0D1D6B4E52826D1`,
+    url: `https://mpdz-isv.isvjcloud.com/ql/front/tcl002/loadTclAct?id=tclTeamAct002&user_id=10299171&comeResource=10&bizExtString=4C8602ED441A318612CD57B4A16EB59EE8AF00C05E1043CAA3E9C10B6DA615700C9463CE3D33670238160230F84D490EE29440149504E2EB1EAD11840F8E2980DDDA672BF446E2FCC0D1D6B4E52826D1`,
     headers: {
       'Host': 'mpdz-isv.isvjcloud.com',
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
