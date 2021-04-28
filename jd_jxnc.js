@@ -51,10 +51,10 @@ let currentToken = {}; // 当前用户 token
 let shareCode = ''; // 内置助力码
 let jxncShareCodeArr = []; // 用户 助力码 数组
 let currentShareCode = [
-"{\"smp\":\"610683d9c645d6aa3ce1d1cf79cfb182\",\"active\":\"jdnc_1_suli210305_2\",\"joinnum\":\"1\"}",
-"{\"smp\":\"45d50ae6acdf13df00a39bf033bae58a\",\"active\":\"jdnc_1_caomi210305_2\",\"joinnum\":\"1\"}",
-"{\"smp\":\"22bd6fbbabbaa770a45ab2607e7a1e8a\",\"active\":\"jdnc_1_3yuanxuecheng210202_2\",\"joinnum\":\"1\"}",
-"{\"smp\":\"cd6ae799529f73d5124fed57cd8d96f5\",\"active\":\"jdnc_1_sxhuasheng210305_2\",\"joinnum\":\"1\"}",
+"{\"smp\":\"610683d9c645d6aa3ce1d1cf79cfb182\",\"active\":\"jdnc_1_papaya210315_2\",\"joinnum\":\"3\"}",
+"{\"smp\":\"45d50ae6acdf13df00a39bf033bae58a\",\"active\":\"jdnc_1_5yuanluosifen210305_2\",\"joinnum\":\"2\"}",
+"{\"smp\":\"cc1d70e5499c274fad969b0c8fcf312a\",\"active\":\"jdnc_1_xiacheng210315_2\",\"joinnum\":\"1\"}",
+"{\"smp\":\"cd6ae799529f73d5124fed57cd8d96f5\",\"active\":\"jdnc_1_2yuanguifeimang210315_2\",\"joinnum\":\"1\"}",
 "{\"smp\":\"966e581c9786b166591d1c6dc29cb52b\",\"active\":\"jdnc_1_1yuandangao210305_2\",\"joinnum\":\"1\"}",
 ]; // 当前用户 要助力的助力码
 const openUrl = `openjd://virtual?params=${encodeURIComponent('{ "category": "jump", "des": "m", "url": "https://wqsh.jd.com/sns/201912/12/jxnc/detail.html?ptag=7155.9.32&smp=b47f4790d7b2a024e75279f55f6249b9&active=jdnc_1_chelizi1205_2"}',)}`; // 打开京喜农场
