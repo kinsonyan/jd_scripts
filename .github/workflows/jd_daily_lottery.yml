@@ -6,7 +6,7 @@ name: jd_daily_lottery
 on:
   workflow_dispatch:
   schedule:
-    - cron: '13 14,15，17 * * *'#此处为 UTC-0 时间
+    - cron: '13 14,15,17 * * *'#此处为 UTC-0 时间
   watch:
     types: [started]
   repository_dispatch:
@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京喜农场】'
+      - name: '运行 【每日抽奖】'
         run: |
           node jd_daily_lottery.js
         env:
