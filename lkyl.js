@@ -78,6 +78,7 @@ function GetCookie() {
         if (cookieVal) $.setdata(cookieVal, 'cookie_lkyl');
         $.log(`opa:${opa}`),
         $.log(`signtoken:${signtoken}`)
+        $.log(`cookieVal:${cookieVal}`)
         $.msg($.name, `获取Cookie: 成功🎉`, ``)
     }
     $.done()
