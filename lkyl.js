@@ -9,21 +9,21 @@
 3.非专业人士制作，欢迎各位大佬提出宝贵意见和指导
 4.5月17日增加自动兑换京豆，需设置兑换京豆数，现可根据100、200和500设置，不可设置随机兑换数，根据页面填写兑换数值，默认设置500，注意是京豆数❗️ 已取消自动兑换‼️
 5.增加打卡挑战赛自动报名，需要5天后手动领取瓜分奖励‼️
-
+https://github.com/Sunert/Script/tree/master/Task
 by Macsuny
 ~~~~~~~~~~~~~~~~
 Surge 4.0 :
 [Script]
-lkyl.js = type=cron,cronexp=35 5 0 * * *,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/lkyl.js,script-update-interval=0
+lkyl.js = type=cron,cronexp=35 5 0 * * *,script-path=https://raw.githubusercontent.com/Sunert/Script/master/Task/lkyl.js,script-update-interval=0
 
 # 来客有礼 Cookie.
-lkyl.js = type=http-request,pattern=https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\?,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/lkyl.js
+lkyl.js = type=http-request,pattern=https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\?,script-path=https://raw.githubusercontent.com/Sunert/Script/master/Task/lkyl.js
 ~~~~~~~~~~~~~~~~
 Loon 2.1.0+
 [Script]
 cron "04 00 * * *" script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/lkyl.js, enabled=true, tag=来客有礼
 
-http-request https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\? script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/lkyl.js
+http-request https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\? script-path=https://raw.githubusercontent.com/Sunert/Script/master/Task/lkyl.js
 -----------------
 
 QX 1.0. 7+ :
@@ -31,7 +31,7 @@ QX 1.0. 7+ :
 0 9 * * * lkyl.js
 
 [rewrite_local]
-https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\? url script-request-header lkyl.js
+https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\? url script-request-header https://raw.githubusercontent.com/kinsonyan/jd_scripts/main/lkyl.js
 ~~~~~~~~~~~~~~~~
 [MITM]
 hostname = draw.jdfcloud.com
@@ -129,7 +129,7 @@ function info() {
             if (userinfo.errorCode == null) {
                 uesername = "昵称: " + userinfo.data.nickName
                 $.log("\n********* " + uesername + " *********\n")
-                await getsign();
+                //await getsign();
             }
             resolve()
         })
