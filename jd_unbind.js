@@ -28,16 +28,10 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const jdNotify = $.getdata('jdUnbindCardNotify');//是否关闭通知，false打开通知推送，true关闭通知推送
-let cardPageSize = 200;// 运行一次取消多少个会员卡。数字0表示不注销任何会员卡
+let cardPageSize = 20;// 运行一次取消多少个会员卡。数字0表示不注销任何会员卡
 let stopCards = `京东PLUS会员`;//遇到此会员卡跳过注销,多个使用&分开
 const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
@@ -48,7 +42,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
@@ -81,6 +75,7 @@ async function jdUnbind() {
 }
 async function unsubscribeCards() {
   let count = 0
+  $.pushcardList=[]
   for (let item of $.cardList) {
     if (count === cardPageSize * 1){
       console.log(`已达到设定数量:${cardPageSize * 1}`)
@@ -92,6 +87,8 @@ async function unsubscribeCards() {
     }
     console.log(`去注销会员卡【${item.brandName}】`)
     let res = await unsubscribeCard(item.brandId);
+    $.pushcardList.push(`去注销会员卡【${item.brandName}】`)
+    $.pushcardList.push(`https://shopmember.m.jd.com/member/memberCloseAccount?venderId=${item.brandId}`)
     if (res['success']) {
       if (res['busiCode'] === '200') {
         count++;
@@ -100,6 +97,34 @@ async function unsubscribeCards() {
     }
     await $.wait(1000)
   }
+  
+  let push_len = $.pushcardList.length
+  let push_lena = parseInt(push_len/20)
+  let push_lenb = push_len%20
+
+  if (push_lena == 0) {
+    let tg_text = ''
+    for (a = 0; a < push_len; a++){
+      tg_text = tg_text + $.pushcardList[a] + '\n'
+    }
+    await notify.sendNotify(`京东会员卡注消链接`, `【京东账号${$.index}】${$.UserName}\n${tg_text}`);
+  } else {
+    let step = 0
+    for (step = 0; step < push_lena; step++){
+      let tg_text = ''
+      for (a = 0; a < 20; a++){
+        tg_text = tg_text + $.pushcardList[a+step*20] + '\n'
+      }
+      await notify.sendNotify(`京东会员卡注消链接`, `【京东账号${$.index}】${$.UserName}\n${tg_text}`);
+    }
+
+    let tg_text = ''
+    for (b = 0; b < push_lenb; b++){
+      tg_text = tg_text + $.pushcardList[b+step*20] + '\n'
+    }
+    await notify.sendNotify(`京东会员卡注消链接`, `【京东账号${$.index}】${$.UserName}\n${tg_text}`);
+  }
+
 }
 function showMsg() {
   if (!jdNotify || jdNotify === 'false') {
@@ -111,14 +136,14 @@ function showMsg() {
 function getCards() {
   return new Promise((resolve) => {
     const option = {
-      url: `${JD_API_HOST}client.action?functionId=getWalletReceivedCardList`,
-      body: 'body=%7B%22version%22%3A1580659200%7D&build=167490&client=apple&clientVersion=9.3.2&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&rfs=0000&scope=01&sign=aa00f715800e252fcebcb11573f4a505&st=1608612985755&sv=102',
+      url: `${JD_API_HOST}client.action?functionId=getWalletReceivedCardList_New`,
+      body: 'body=%7B%22v%22%3A%224.3%22%2C%22version%22%3A1580659200%7D&build=167668&client=apple&clientVersion=9.5.4&openudid=c5eb641f1e40b339e2e111619f22ef1e5fdc7834&rfs=0000&scope=01&sign=c18a161ddaf21f44e9cd56a8db29362e&st=1621407560442&sv=101',
       headers: {
         "Host": "api.m.jd.com",
         "Accept": "*/*",
         "Connection": "keep-alive",
         "Cookie": cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
         "Accept-Language": "zh-cn",
         "Accept-Encoding": "gzip, deflate, br"
       },
@@ -140,6 +165,7 @@ function getCards() {
       } finally {
         resolve(data);
       }
+      console.log($.cardList)
     });
   })
 }
@@ -152,7 +178,7 @@ function unsubscribeCard(vendorId) {
         "Accept": "*/*",
         "Connection": "keep-alive",
         'origin': 'https://shopmember.m.jd.com',
-        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
         'Referer': `https://shopmember.m.jd.com/member/memberCloseAccount?venderId=${vendorId}`,
         'Cookie': cookie,
         "Accept-Language": "zh-cn",
@@ -167,7 +193,7 @@ function unsubscribeCard(vendorId) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data)
-            console.log(data.message)
+            console.log(`https://shopmember.m.jd.com/member/memberCloseAccount?venderId=${vendorId}`)
           }
         }
       } catch (e) {
@@ -190,7 +216,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       }
     }
     $.post(options, (err, resp, data) => {
@@ -205,7 +231,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`)
           }
