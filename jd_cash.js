@@ -24,15 +24,17 @@ const $ = new Env('签到领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
+let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 let helpAuthor = false;
 const randomCount = 0;//const randomCount = $.isNode() ? 20 : 5;
 let cash_exchange = false;//是否消耗2元红包兑换200京豆，默认否
 const inviteCodes = [
-  ``,
-  ``
+  'eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A@eU9Yab2zZf4voDjTzXUa1A',
+  '-pmvtW0-sG-d@eU9Ya-21Nagl9TjQynEa0A@eU9Yab2zZf4voDjTzXUa1A',
+  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Yab2zZf4voDjTzXUa1A',
+  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A'	
 ]
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
