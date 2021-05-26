@@ -47,7 +47,19 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
   //账号三的好友shareCode,不同好友的shareCode中间用@符号隔开
   '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Yab2zZf4voDjTzXUa1A',
   //账号四的好友shareCode,不同好友的shareCode中间用@符号隔开
-  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A',											   
+  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A',	
+  //账号五的好友shareCode,不同好友的shareCode中间用@符号隔开
+  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A',
+  //账号六的好友shareCode,不同好友的shareCode中间用@符号隔开
+  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A',
+  //账号七的好友shareCode,不同好友的shareCode中间用@符号隔开
+  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A',
+  //账号八的好友shareCode,不同好友的shareCode中间用@符号隔开
+  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A',
+  //账号九的好友shareCode,不同好友的shareCode中间用@符号隔开
+  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A',
+  //账号十的好友shareCode,不同好友的shareCode中间用@符号隔开
+  '-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A',
 ]
 
 !(async () => {
