@@ -6,7 +6,7 @@ name: 家电星推官
 on:
   workflow_dispatch:
   schedule:
-    - cron: '40 1-10/3 * 5,6 *'
+    - cron: '11 1-10/3 * 5,6 *'
   watch:
     types: started
   repository_dispatch:
