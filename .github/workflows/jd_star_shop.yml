@@ -37,7 +37,7 @@ jobs:
           npm install
       - name: '运行 【明星小店(星店长)】'
         run: |
-          node adolf_newInteraction.js
+          node jd_star_shop.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
