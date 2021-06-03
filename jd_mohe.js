@@ -66,7 +66,7 @@ $.shareId = [];
         }
         continue
       }
-      await shareUrl();
+      //await shareUrl();
       await getCoin();//领取每三小时自动生产的热力值
       await Promise.all([
         task0(),
