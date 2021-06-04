@@ -6,7 +6,7 @@ name: jd_mcxhd
 on:
   workflow_dispatch:
   schedule:
-    - cron: '4 2* * *' # UTC=0 时区
+    - cron: '4 2 * * *' # UTC=0 时区
   watch:
     types: started
   repository_dispatch:
