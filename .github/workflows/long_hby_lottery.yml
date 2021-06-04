@@ -6,7 +6,7 @@ name: 618主会场红包雨
 on:
   workflow_dispatch:
   schedule:
-    - cron: '1 12 1-18 6 *' # UTC=0 时区
+    - cron: '1 10-23/1 1-18 6 *' # UTC=0 时区
   watch:
     types: started
   repository_dispatch:
