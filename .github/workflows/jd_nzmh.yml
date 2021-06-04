@@ -6,11 +6,11 @@ name: jd_nzmh
 on:
   workflow_dispatch:
   schedule:
-    - cron: ' 0 0 1-8/1,27,28 2,3 *' #此处为UTC-0时间
+    - cron: '35 15,17 * * *' #此处为UTC-0时间
   watch:
     types: started
   repository_dispatch:
-    types: nzmh
+    types: 女装盲盒
 jobs:
   build:
 
