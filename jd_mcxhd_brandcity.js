@@ -250,7 +250,7 @@ function taskPostUrl(functionid, body) {
             Connection: "keep-alive",
             Cookie: cookie,
             Host: "api.m.jd.com",
-            Referer: "https://h5.m.jd.com/babelDiy/Zeus/31LKY9sFZZUvj5aN1TrZUE4V6xzQ/index.html?itemToken=43xA_erJaPow6F86M-TPd4qDWtScVpq8Ic-Xv4e0CQu-AoXanOJaHrqaPyBlbQkCd0kw&lng=107.147022&lat=33.255229&sid=e5150a3fdd017952350b4b41294b145w&un_area=27_2442_2444_31912",
+            Referer: "https://h5.m.jd.com/babelDiy/Zeus/31LKY9sFZZUvj5aN1TrZUE4V6xzQ/index.html",
             "User-Agent": "jdapp;android;9.4.4;10;3b78ecc3f490c7ba;network/UNKNOWN;model/M2006J10C;addressid/138543439;aid/3b78ecc3f490c7ba;oaid/7d5870c5a1696881;osVer/29;appBuild/85576;psn/3b78ecc3f490c7ba|541;psq/2;uid/3b78ecc3f490c7ba;adk/;ads/;pap/JA2015_311210|9.2.4|ANDROID 10;osv/10;pv/548.2;jdv/0|iosapp|t_335139774|appshare|CopyURL|1606277982178|1606277986;ref/com.jd.lib.personal.view.fragment.JDPersonalFragment;partner/xiaomi001;apprpd/MyJD_Main;Mozilla/5.0 (Linux; Android 10; M2006J10C Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045227 Mobile Safari/537.36",
         }
     }
