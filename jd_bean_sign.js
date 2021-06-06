@@ -1,12 +1,9 @@
 /*
- * @Author: lxk0301 https://gitee.com/lxk0301
- */
-/*
 京东多合一签到,自用,可N个京东账号
 活动入口：各处的签到汇总
 Node.JS专用
 IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
-更新时间：2021-4-9
+更新时间：2021-5-6
 推送通知默认简洁模式(多账号只发送一次)。如需详细通知，设置环境变量 JD_BEAN_SIGN_NOTIFY_SIMPLE 为false即可(N账号推送N次通知)。
 Modified From github https://github.com/ruicky/jd_sign_bot
  */
@@ -58,13 +55,14 @@ if ($.isNode()) {
   }
   //await deleteFile(JD_DailyBonusPath);//删除下载的JD_DailyBonus.js文件
   if ($.isNode() && allMessage && process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE === 'true') {
-    await notify.sendNotify(`${$.name}`, `${allMessage}`)
+    $.msg($.name, '', allMessage);
+    await notify.sendNotify($.name, allMessage)
   }
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
 async function execSign() {
-  console.log(`\n开始执行脚本签到，请稍等`)
+  console.log(`\n开始执行 ${$.name} 签到，请稍等...\n`);
   try {
     // if (notify.SCKEY || notify.BARK_PUSH || notify.DD_BOT_TOKEN || (notify.TG_BOT_TOKEN && notify.TG_USER_ID) || notify.IGOT_PUSH_KEY || notify.QQ_SKEY) {
     //   await exec(`${process.execPath} ${JD_DailyBonusPath} >> ${resultPath}`);
@@ -76,7 +74,7 @@ async function execSign() {
     // }
     await exec(`${process.execPath} ${JD_DailyBonusPath} >> ${resultPath}`);
     const notifyContent = await fs.readFileSync(resultPath, "utf8");
-    console.log(`👇👇👇👇👇👇👇👇👇👇👇LOG记录👇👇👇👇👇👇👇👇👇👇👇\n${notifyContent}\n👆👆👆👆👆👆👆👆👆LOG记录👆👆👆👆👆👆👆👆👆👆👆`);
+    console.error(`👇👇👇👇👇👇👇👇👇👇👇签到详情👇👇👇👇👇👇👇👇👇👇👇\n${notifyContent}\n👆👆👆👆👆👆👆👆👆签到详情👆👆👆👆👆👆👆👆👆👆👆`);
     // await exec("node JD_DailyBonus.js", { stdio: "inherit" });
     // console.log('执行完毕', new Date(new Date().getTime() + 8 * 3600000).toLocaleDateString())
     //发送通知
@@ -84,16 +82,16 @@ async function execSign() {
     if (fs.existsSync(resultPath)) {
       const barkContentStart = notifyContent.indexOf('【签到概览】')
       const barkContentEnd = notifyContent.length;
-      if (process.env.JD_BEAN_SIGN_STOP_NOTIFY === 'true') return
-      if (process.env.BARK_PUSH || notify.BARK_PUSH) process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE = 'true';
-      if (process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE === 'true') {
-        if (barkContentStart > -1 && barkContentEnd > -1) {
-          BarkContent = notifyContent.substring(barkContentStart, barkContentEnd);
-        }
-        BarkContent = BarkContent.split('\n\n')[0];
-      } else {
-        if (barkContentStart > -1 && barkContentEnd > -1) {
-          BarkContent = notifyContent.substring(barkContentStart, barkContentEnd);
+      if (process.env.JD_BEAN_SIGN_STOP_NOTIFY !== 'true') {
+        if (process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE === 'true') {
+          if (barkContentStart > -1 && barkContentEnd > -1) {
+            BarkContent = notifyContent.substring(barkContentStart, barkContentEnd);
+          }
+          BarkContent = BarkContent.split('\n\n')[0];
+        } else {
+          if (barkContentStart > -1 && barkContentEnd > -1) {
+            BarkContent = notifyContent.substring(barkContentStart, barkContentEnd);
+          }
         }
       }
     }
@@ -109,7 +107,7 @@ async function execSign() {
     }
     //运行完成后，删除下载的文件
     await deleteFile(resultPath);//删除result.txt
-    console.log(`\n\n*****************${new Date(new Date().getTime()).toLocaleString('zh', {hour12: false})} 京东账号${$.index} ${$.nickName || $.UserName}京豆签到完成*******************\n\n`);
+    console.log(`\n\n*****************${new Date(new Date().getTime()).toLocaleString('zh', {hour12: false})} 京东账号${$.index} ${$.nickName || $.UserName} ${$.name}完成*******************\n\n`);
   } catch (e) {
     console.log("京东签到脚本执行异常:" + e);
   }
