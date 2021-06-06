@@ -729,7 +729,7 @@ function getPetTaskConfig() {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
-          // console.log('JSON.parse(data)', JSON.parse(data))
+          console.log('JSON.parse(data)', JSON.parse(data))
           $.getPetTaskConfigRes = JSON.parse(data);
         }
       } catch (e) {
