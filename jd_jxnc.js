@@ -38,7 +38,17 @@ let tokenArr = []; // 用户 token 数组
 let currentToken = {}; // 当前用户 token
 let shareCode = ''; // 内置助力码
 let jxncShareCodeArr = []; // 用户 助力码 数组
-let currentShareCode = []; // 当前用户 要助力的助力码
+let currentShareCode = ["{\"smp\":\"610683d9c645d6aa3ce1d1cf79cfb182\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":1}",
+"{\"smp\":\"45d50ae6acdf13df00a39bf033bae58a\",\"active\":\"jdnc_1_dami210601_2\",\"joinnum\":1}",
+"{\"smp\":\"cc1d70e5499c274fad969b0c8fcf312a\",\"active\":\"jdnc_1_dami210601_2\",\"joinnum\":1}",
+"{\"smp\":\"cd6ae799529f73d5124fed57cd8d96f5\",\"active\":\"jdnc_1_dami210601_2\",\"joinnum\":2}",
+"{\"smp\":\"966e581c9786b166591d1c6dc29cb52b\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":1}",
+"{\"smp\":\"abfc5d4e95bb0cd6e1af703478d75c9b\",\"active\":\"jdnc_1_2yuanchouju210422_2\",\"joinnum\":1}",
+"{\"smp\":\"5ddf1964d696f320f598a96bb652bdc4\",\"active\":\"jdnc_1_2yuanchouju210422_2\",\"joinnum\":1}",
+"{\"smp\":\"17fc8651c9f73a37e92f5bc2036a8842\",\"active\":\"jdnc_1_dami210601_2\",\"joinnum\":1}",
+"{\"smp\":\"6d7b0d8e4f8d0b8b35c6e1fd47cb2c40\",\"active\":\"jdnc_1_3yuanshousibang210601_2\",\"joinnum\":1}",
+"{\"smp\":\"d6c05dc47fc2f61870d5cbed36febd05\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":1}"
+]; // 当前用户 要助力的助力码
 const openUrl = `openjd://virtual?params=${encodeURIComponent('{ "category": "jump", "des": "m", "url": "https://wqsh.jd.com/sns/201912/12/jxnc/detail.html?ptag=7155.9.32&smp=b47f4790d7b2a024e75279f55f6249b9&active=jdnc_1_chelizi1205_2"}',)}`; // 打开京喜农场
 let subTitle = '', message = '', option = {'open-url': openUrl}; // 消息副标题，消息正文，消息扩展参数
 const JXNC_API_HOST = 'https://wq.jd.com/';
