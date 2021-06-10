@@ -45,6 +45,11 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
   '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
   '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
   '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza',
 ]
 let allMessage = ``;
 let currentRoundId = null;//本期活动id
