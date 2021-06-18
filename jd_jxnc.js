@@ -37,14 +37,7 @@ let tokenNull = {'farm_jstoken': '', 'phoneid': '', 'timestamp': ''}; // 内置�
 let tokenArr = []; // 用户 token 数组
 let currentToken = {}; // 当前用户 token
 let shareCode = ''; // 内置助力码
-let jxncShareCodeArr = [
-"{\"smp\":\"610683d9c645d6aa3ce1d1cf79cfb182\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":3}",
-"{\"smp\":\"45d50ae6acdf13df00a39bf033bae58a\",\"active\":\"jdnc_1_3yuanganju210601_2\",\"joinnum\":1}",
-"{\"smp\":\"cd6ae799529f73d5124fed57cd8d96f5\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":2}",
-"{\"smp\":\"f000f9ad1add823c4776c1bbab717786\",\"active\":\"jdnc_1_3yuanshousibang210601_2\",\"joinnum\":1}",
-"{\"smp\":\"c3aa13a7e65bbe714509b6fab27a3783\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":1}",
-"{\"smp\":\"22915482a567bdf074840a56c2dc6da1\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":1}"
-]; // 用户 助力码 数组
+let jxncShareCodeArr = ["{\"smp\":\"610683d9c645d6aa3ce1d1cf79cfb182\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":3}","{\"smp\":\"45d50ae6acdf13df00a39bf033bae58a\",\"active\":\"jdnc_1_3yuanganju210601_2\",\"joinnum\":1}","{\"smp\":\"cd6ae799529f73d5124fed57cd8d96f5\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":2}","{\"smp\":\"f000f9ad1add823c4776c1bbab717786\",\"active\":\"jdnc_1_3yuanshousibang210601_2\",\"joinnum\":1}","{\"smp\":\"c3aa13a7e65bbe714509b6fab27a3783\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":1}","{\"smp\":\"22915482a567bdf074840a56c2dc6da1\",\"active\":\"jdnc_1_3yuanshupian210601_2\",\"joinnum\":1}"]; // 用户 助力码 数组
 let currentShareCode = []; // 当前用户 要助力的助力码
 const openUrl = `openjd://virtual?params=${encodeURIComponent('{ "category": "jump", "des": "m", "url": "https://wqsh.jd.com/sns/201912/12/jxnc/detail.html?ptag=7155.9.32&smp=b47f4790d7b2a024e75279f55f6249b9&active=jdnc_1_chelizi1205_2"}',)}`; // 打开京喜农场
 let subTitle = '', message = '', option = {'open-url': openUrl}; // 消息副标题，消息正文，消息扩展参数
