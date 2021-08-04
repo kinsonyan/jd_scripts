@@ -46,7 +46,7 @@ const inviteCodes = [
                     'T012Z3_rmZ-VI8dsCjVfnoaW5kRrbA@T0225KkcRx0c81zXc0-gxaYPIQCjVfnoaW5kRrbA@T0225KkcRx8epgDUJEzxlfUDcgCjVfnoaW5kRrbA@T0225KkcRU8Y9lbecUzykvEDdgCjVfnoaW5kRrbA@T0205KkcF0NMsAiBSUS1xZVtCjVfnoaW5kRrbA@T0205KkcEV9ZvzCxZGye4INrCjVfnoaW5kRrbA@T0205KkcFm1ooAyhUWOS565MCjVfnoaW5kRrbA@T018v_50RR4Z9lXTIh6b1ACjVfnoaW5kRrbA',
                     ]
 let reward = process.env.JD_HEALTH_REWARD_NAME ? process.env.JD_HEALTH_REWARD_NAME : ''
-const randomCount = $.isNode() ? 20 : 5;//const randomCount = $.isNode() ? 20 : 5;
+const randomCount = 0;//const randomCount = $.isNode() ? 20 : 5;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);
