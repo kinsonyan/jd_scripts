@@ -1,5 +1,5 @@
 /*
-种豆得豆 脚本更新地址：https://jdsharedresourcescdn.azureedge.net/jdresource/jd_plantBean.js
+种豆得豆 脚本更新地址：https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js
 更新时间：2021-04-9
 活动入口：京东APP我的-更多工具-种豆得豆
 已支持IOS京东多账号,云端多京东账号
@@ -9,19 +9,18 @@
 每个京东账号每天只能帮助3个人。多出的助力码将会助力失败。
 =====================================Quantumult X=================================
 [task_local]
-1 7-21/2 * * * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png, enabled=true
+1 7-21/2 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png, enabled=true
 
 =====================================Loon================================
 [Script]
-cron "1 7-21/2 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_plantBean.js,tag=京东种豆得豆
+cron "1 7-21/2 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js,tag=京东种豆得豆
 
 ======================================Surge==========================
-京东种豆得豆 = type=cron,cronexp="1 7-21/2 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_plantBean.js
+京东种豆得豆 = type=cron,cronexp="1 7-21/2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js
 
 ====================================小火箭=============================
-京东种豆得豆 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_plantBean.js, cronexpr="1 7-21/2 * * *", timeout=3600, enable=true
+京东种豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, cronexpr="1 7-21/2 * * *", timeout=3600, enable=true
 
-搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_plantBean.js
 */
 const $ = new Env('京东种豆得豆');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -34,26 +33,26 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode 
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
-  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
+  '3nswuxo7fuj3h7ivd7sqxoic7i@4npkonnsy7xi2ehxilvfreeispae6veum2iz6jq@4npkonnsy7xi2as4subnpw6ijiicmjgtqy5wvkq@mlrdw3aw26j3w2avgw4flyyvigbxgnvojo4cqza@o7eiltak46s2xg6m66t3oeijgipanresegual5y@rj7s6mzlk7uoge6v3dvbewbtkuxvstejgitslei@cshk5bfjifz75w5cyl6coftopohmyi7dkajpvia@wl2ldhkjknjq4tg23xvpliknma3h7wlwy7o5jii@mlrdw3aw26j3wlrcznqqdtddeh6la57p77surfa@bhyze4x3reh6vjmnjiuhro3eoa@hd5mwplprfzko6px45kol6tvxu@xne2y45jxvlhz5hqaajca47sukvgllxp5uiwtuq@p2t2bfsgsjmggajb4yzoaihjj4@cshk5bfjifz74of572bxwgonhuop6w2txhbbdya@e7lhibzb3zek3ftwyagwc3mwnvfrqwaa3b7hexa@e7lhibzb3zek2d7qfe43cidmhfg3yo76w6ese2a@mlrdw3aw26j3w4pbi4srrz27wbqveudo5reqaty@yvyfayyeknfs36lf74qwtxljea',
 ]
 let allMessage = ``;
 let currentRoundId = null;//本期活动id
@@ -61,6 +60,7 @@ let lastRoundId = null;//上期id
 let roundList = [];
 let awardState = '';//上期活动的京豆是否收取
 let randomCount = $.isNode() ? 20 : 5;
+let num;
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -105,19 +105,25 @@ async function jdPlantBean() {
   try {
     console.log(`获取任务及基本信息`)
     await plantBeanIndex();
+    for (let i = 0; i < $.plantBeanIndexResult.data.roundList.length; i++) {
+      if ($.plantBeanIndexResult.data.roundList[i].roundState === "2") {
+        num = i
+        break
+      }
+    }
     // console.log(plantBeanIndexResult.data.taskList);
     if ($.plantBeanIndexResult && $.plantBeanIndexResult.code === '0' && $.plantBeanIndexResult.data) {
       const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl
       $.myPlantUuid = getParam(shareUrl, 'plantUuid')
       console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${$.myPlantUuid}\n`);
       roundList = $.plantBeanIndexResult.data.roundList;
-      currentRoundId = roundList[1].roundId;//本期的roundId
-      lastRoundId = roundList[0].roundId;//上期的roundId
-      awardState = roundList[0].awardState;
+      currentRoundId = roundList[num].roundId;//本期的roundId
+      lastRoundId = roundList[num - 1].roundId;//上期的roundId
+      awardState = roundList[num - 1].awardState;
       $.taskList = $.plantBeanIndexResult.data.taskList;
       subTitle = `【京东昵称】${$.plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
-      message += `【上期时间】${roundList[0].dateDesc.replace('上期 ', '')}\n`;
-      message += `【上期成长值】${roundList[0].growth}\n`;
+      message += `【上期时间】${roundList[num - 1].dateDesc.replace('上期 ', '')}\n`;
+      message += `【上期成长值】${roundList[num - 1].growth}\n`;
       await receiveNutrients();//定时领取营养液
       await doHelp();//助力
       await doTask();//做日常任务
@@ -141,7 +147,7 @@ async function doGetReward() {
   console.log(`【上轮京豆】${awardState === '4' ? '采摘中' : awardState === '5' ? '可收获了' : '已领取'}`);
   if (awardState === '4') {
     //京豆采摘中...
-    message += `【上期状态】${roundList[0].tipBeanEndTitle}\n`;
+    message += `【上期状态】${roundList[num - 1].tipBeanEndTitle}\n`;
   } else if (awardState === '5') {
     //收获
     await getReward();
@@ -159,18 +165,18 @@ async function doGetReward() {
     }
   } else if (awardState === '6') {
     //京豆已领取
-    message += `【上期兑换京豆】${roundList[0].awardBeans}个\n`;
+    message += `【上期兑换京豆】${roundList[num - 1].awardBeans}个\n`;
   }
-  if (roundList[1].dateDesc.indexOf('本期 ') > -1) {
-    roundList[1].dateDesc = roundList[1].dateDesc.substr(roundList[1].dateDesc.indexOf('本期 ') + 3, roundList[1].dateDesc.length);
+  if (roundList[num].dateDesc.indexOf('本期 ') > -1) {
+    roundList[num].dateDesc = roundList[num].dateDesc.substr(roundList[num].dateDesc.indexOf('本期 ') + 3, roundList[num].dateDesc.length);
   }
-  message += `【本期时间】${roundList[1].dateDesc}\n`;
-  message += `【本期成长值】${roundList[1].growth}\n`;
+  message += `【本期时间】${roundList[num].dateDesc}\n`;
+  message += `【本期成长值】${roundList[num].growth}\n`;
 }
 async function doCultureBean() {
   await plantBeanIndex();
   if ($.plantBeanIndexResult && $.plantBeanIndexResult.code === '0') {
-    const plantBeanRound = $.plantBeanIndexResult.data.roundList[1]
+    const plantBeanRound = $.plantBeanIndexResult.data.roundList[num]
     if (plantBeanRound.roundState === '2') {
       //收取营养液
       if (plantBeanRound.bubbleInfos && plantBeanRound.bubbleInfos.length) console.log(`开始收取营养液`)
@@ -580,10 +586,10 @@ function shareCodesFormat() {
       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
       newShareCodes = shareCodes[tempIndex].split('@');
     }
-    const readShareCodeRes = await readShareCode();
-    if (readShareCodeRes && readShareCodeRes.code === 200) {
-      newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
-    }
+    // const readShareCodeRes = await readShareCode();
+    // if (readShareCodeRes && readShareCodeRes.code === 200) {
+    //   newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
+    // }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
