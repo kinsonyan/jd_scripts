@@ -28,7 +28,7 @@ let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭�
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 let helpAuthor = true;
-const randomCount = $.isNode() ? 5 : 5;
+const randomCount = 0;//const randomCount = $.isNode() ? 5 : 5;
 let cash_exchange = false;//是否消耗2元红包兑换200京豆，默认否
 const inviteCodes = [
   `-pmvtW0-sG-d@eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A@eU9Yab2zZf4voDjTzXUa1A@eU9YOp_DM6RQgBezuCpV@IhgwaeyyZf0i82q6iw@eU9Yab60b_kip2yAnnoQ0Q@ZUBhObLl@YURpO4O6Y_0k@eU9YaengZvV392qAy3tA1w@aUNoMrvoP614ojGLnA@IhgwaeyyZf0i82q6iw@UGJGE-6xZQ@eU9YOqzGH75mrjGNmTBV@eU9YaL7gYv0m9D-By3cbhw@eU9YaLrgY_xy-DzXznJHhA@a01qJLrvLqp7`,
@@ -504,6 +504,7 @@ function showMsg() {
     resolve()
   })
 }
+/*
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
@@ -527,7 +528,7 @@ function readShareCode() {
     await $.wait(10000);
     resolve()
   })
-}
+} */
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
@@ -542,10 +543,10 @@ function shareCodesFormat() {
      // let authorCode = deepCopy($.authorCode)
       $.newShareCodes = [...$.newShareCodes];
     }
-    const readShareCodeRes = await readShareCode();
-    if (readShareCodeRes && readShareCodeRes.code === 200) {
-      $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
-    }
+  //  const readShareCodeRes = await readShareCode();
+   // if (readShareCodeRes && readShareCodeRes.code === 200) {
+    //  $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
+    //}
     $.newShareCodes.map((item, index) => $.newShareCodes[index] = { "inviteCode": item, "shareDate": $.shareDate })
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();
