@@ -59,7 +59,7 @@ let currentRoundId = null;//本期活动id
 let lastRoundId = null;//上期id
 let roundList = [];
 let awardState = '';//上期活动的京豆是否收取
-let randomCount = $.isNode() ? 20 : 5;
+let randomCount = 0;//let randomCount = $.isNode() ? 20 : 5;
 let num;
 !(async () => {
   await requireConfig();
@@ -105,6 +105,10 @@ async function jdPlantBean() {
   try {
     console.log(`获取任务及基本信息`)
     await plantBeanIndex();
+    if ($.plantBeanIndexResult.errorCode === 'PB101') {
+      console.log(`\n活动太火爆了，还是去买买买吧！\n`)
+      return
+    }
     for (let i = 0; i < $.plantBeanIndexResult.data.roundList.length; i++) {
       if ($.plantBeanIndexResult.data.roundList[i].roundState === "2") {
         num = i
@@ -127,7 +131,7 @@ async function jdPlantBean() {
       await receiveNutrients();//定时领取营养液
       await doHelp();//助力
       await doTask();//做日常任务
-      await doEgg();
+      // await doEgg();
       await stealFriendWater();
       await doCultureBean();
       await doGetReward();
