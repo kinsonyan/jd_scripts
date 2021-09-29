@@ -85,7 +85,7 @@ if ($.isNode()) {
         appId = appIdArr[v]
         appName = appNameArr[v]
         console.log(`开始助力第${v + 1}个活动：${appName}\n`)
-        for (let j = $.shareCode.length-1; j < $.shareCode.length && $.canHelp; j--) {
+        for (let j = 0; j < $.shareCode.length && $.canHelp; j++) {
           if ($.shareCode[j].appId === appId) {
             console.log(`${$.UserName} 去助力 ${$.shareCode[j].use} 的助力码 ${$.shareCode[j].code}`)
             if ($.UserName == $.shareCode[j].use) {
