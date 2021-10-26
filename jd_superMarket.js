@@ -22,19 +22,19 @@ const $ = new Env('东东超市');
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', jdSuperMarketShareArr = [], notify, newShareCodes;
 let helpAu = false;//给作者助力 免费拿,省钱大赢家等活动.默认true是,false不助力.
-//helpAu = $.isNode() ? (process.env.HELP_AUTHOR ? process.env.HELP_AUTHOR === 'true' : helpAu) : helpAu;
+helpAu = $.isNode() ? (process.env.HELP_AUTHOR ? process.env.HELP_AUTHOR === 'true' : helpAu) : helpAu;
 let jdNotify = true;//用来是否关闭弹窗通知，true表示关闭，false表示开启。
 let superMarketUpgrade = true;//自动升级,顺序:解锁升级商品、升级货架,true表示自动升级,false表示关闭自动升级
 let businessCircleJump = true;//小于对方300热力值自动更换商圈队伍,true表示运行,false表示禁止
 let drawLotteryFlag = false;//是否用500蓝币去抽奖，true表示开启，false表示关闭。默认关闭
-let joinPkTeam = false;//是否自动加入PK队伍
+let joinPkTeam = true;//是否自动加入PK队伍
 let message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
 
 //助力好友分享码
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
-let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
+ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
   //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
   'eU9Ya--3YPQmojuBmiIWgw@eU9Ya-21Nagl9TjQynEa0A@eU9Yab2zZf4voDjTzXUa1A',
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
@@ -1650,7 +1650,7 @@ async function bigWinner() {
   }
 }
 
-function _618(redEnvelopeId, inviter, helpType = '1', linkId = 'yMVR-_QKRd2Mq27xguJG-w') {
+function _618(redEnvelopeId, inviter, helpType = '1', linkId = 'PFbUR7wtwUcQ860Sn8WRfw') {
   return new Promise(resolve => {
     $.get({
       url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={%22linkId%22:%22${linkId}%22,%22redEnvelopeId%22:%22${redEnvelopeId}%22,%22inviter%22:%22${inviter}%22,%22helpType%22:%22${helpType}%22}&t=${+new Date()}&appid=activities_platform&clientVersion=3.5.0`,
@@ -1660,7 +1660,7 @@ function _618(redEnvelopeId, inviter, helpType = '1', linkId = 'yMVR-_QKRd2Mq27x
         'origin': 'https://618redpacket.jd.com',
         'user-agent': 'jdltapp;iPhone;3.5.0;14.2;network/wifi;hasUPPay/0;pushNoticeIsOpen/0;lang/zh_CN;model/iPhone10,2;hasOCPay/0;appBuild/1066;supportBestPay/0;pv/7.0;apprpd/;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
         'accept-language': 'zh-cn',
-        'referer': `https://618redpacket.jd.com/?activityId=yMVR-_QKRd2Mq27xguJG-w&redEnvelopeId=${redEnvelopeId}&inviterId=${inviter}&helpType=1&lng=&lat=&sid=`,
+        'referer': `https://618redpacket.jd.com/?activityId=${linkId}&redEnvelopeId=${redEnvelopeId}&inviterId=${inviter}&helpType=1&lng=&lat=&sid=`,
         'Cookie': cookie
       }
     }, (err, resp, data) => {
